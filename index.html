@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>세부 실시간 교통 마스터</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-start: #005a66;
+      --bg-end: #00303b;
+      --card-bg: rgba(0, 60, 70, 0.82);
+      --card-bg-solid: #003c46;
+      --card-border: rgba(236, 254, 255, 0.14);
+      --primary: #14b8a6;
+      --secondary: #2dd4bf;
+      --light: #5eead4;
+      --accent: #FF6B35;
+      --accent-gold: #fef9c3;
+      --text: #ecfeff;
+      --text-muted: #99f6e4;
+      --text-bright: #ccfbf1;
+      --white: #ffffff;
+      --shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+      --shadow-card: 0 6px 22px rgba(0, 0, 0, 0.22);
+      --radius: 16px;
+      --map-height: 520px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start) 0%, #004752 45%, var(--bg-end) 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-wrap: break-word;
+    }
+
+    /* 앱 텍스트 영역에만 줄바꿈 적용 — 지도(#map) 제외 */
+    .top-bar,
+    .map-box-header,
+    .transport-section,
+    .destination-section,
+    .faq-section,
+    .alert-bar,
+    .map-placeholder,
+    .map-location-status,
+    .map-locate-btn,
+    .dest-sub-links,
+    .dest-sub-link-btn {
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
+
+    .app {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100%;
+      background: transparent;
+      position: relative;
+    }
+
+    /* ===== Home (scroll) ===== */
+    .home-view {
+      min-height: 100vh;
+      padding-bottom: 32px;
+    }
+
+    .top-bar {
+      background: transparent;
+      padding: 18px 16px 8px;
+    }
+
+    .brand {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    .page-title {
+      color: var(--text-bright);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Alert */
+    .alert-bar {
+      height: 38px;
+      background: linear-gradient(90deg, #C1121F, var(--accent), #E63946);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .alert-bar::before, .alert-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .alert-bar::before { left: 0; background: linear-gradient(90deg, #C1121F, transparent); }
+    .alert-bar::after { right: 0; background: linear-gradient(-90deg, #E63946, transparent); }
+
+    .alert-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 26s linear infinite;
+    }
+
+    .alert-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 0 28px;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Large Traffic Map */
+    .map-section {
+      padding: 12px 16px 0;
+    }
+
+    .map-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--card-border);
+    }
+
+    .map-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(0, 48, 59, 0.6);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .map-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .traffic-legend {
+      display: flex;
+      gap: 8px;
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .legend-item { display: flex; align-items: center; gap: 3px; }
+    .dot { width: 8px; height: 3px; border-radius: 2px; }
+    .dot.g { background: #34A853; }
+    .dot.y { background: #FBBC04; }
+    .dot.r { background: #EA4335; }
+
+    /* Google Maps 영역 — 앱 CSS와 완전 격리 */
+    .map-canvas {
+      background: #ffffff;
+      isolation: isolate;
+      position: relative;
+      z-index: 0;
+    }
+
+    .map-locate-btn {
+      position: absolute;
+      left: 20px;
+      bottom: 30px;
+      z-index: 5;
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      min-height: 60px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 5px;
+      border: 2px solid rgba(45, 212, 191, 0.65);
+      background: linear-gradient(155deg, #f0fdfa 0%, #ecfeff 55%, #ccfbf1 100%);
+      color: #00404a;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 30, 38, 0.35);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .map-locate-btn:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+
+    .map-locate-btn:disabled,
+    .map-locate-btn.is-syncing {
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .map-locate-btn-icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .map-locate-btn-label {
+      width: 100%;
+      max-width: 48px;
+      padding: 0 2px;
+      font-size: 7.5px;
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+      color: #005a66;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .map-caption {
+      margin: 0;
+      padding: 8px 14px 10px;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      background: rgba(0, 48, 59, 0.5);
+      border-top: 1px solid var(--card-border);
+    }
+
+    .map-location-status {
+      margin: 0;
+      padding: 6px 14px 8px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: #99f6e4;
+      text-align: center;
+      background: rgba(0, 48, 59, 0.5);
+      border-top: 1px solid var(--card-border);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .map-location-status[hidden] {
+      display: none;
+    }
+
+    #map {
+      width: 100%;
+      height: var(--map-height);
+      min-height: 500px;
+      background: #ffffff !important;
+      color: #212121 !important;
+      font-family: Roboto, Arial, sans-serif !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      text-shadow: none !important;
+    }
+
+    /* 앱 전역 color/word-break 상속 차단 */
+    #map .gm-style,
+    #map .gm-style div,
+    #map .gm-style span {
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      text-shadow: none !important;
+    }
+
+    #map .gm-style .gm-style-iw,
+    #map .gm-style .gm-style-iw * {
+      color: #212121 !important;
+      white-space: normal !important;
+    }
+
+    /* Google Maps POI·정류장 아이콘 DOM 숨김 (벡터 지도 대응) */
+    #map .gm-style img[src*="maps.gstatic.com/mapfiles/ms/icons/"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+    .map-placeholder {
+      height: var(--map-height);
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg-solid);
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 16px;
+      text-align: center;
+    }
+
+    /* Transport Grid (4x3) & Destination Grid (1x4) */
+    .transport-section,
+    .destination-section {
+      padding: 16px 10px 0;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .destination-section {
+      padding-top: 20px;
+      padding-bottom: 4px;
+    }
+
+    .transport-heading {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .transport-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .transport-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      min-height: 76px;
+      padding: 8px 3px;
+      box-sizing: border-box;
+      background: rgba(0, 48, 59, 0.88);
+      border: 2px solid rgba(236, 254, 255, 0.08);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--text-bright);
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.15s ease;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .transport-btn:active {
+      transform: scale(0.96);
+    }
+
+    .transport-btn.active {
+      border-color: #38bdf8;
+      background: rgba(0, 90, 102, 0.95);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+    }
+
+    .transport-btn-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .transport-btn-label {
+      width: 100%;
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      color: var(--text-bright);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .transport-detail-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, margin 0.3s ease;
+      margin-top: 0;
+    }
+
+    .transport-detail-panel.open {
+      margin-top: 12px;
+    }
+
+    .transport-detail-inner {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .transport-detail-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .transport-detail-text {
+      font-size: 12px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .transport-detail-text a.transport-detail-link {
+      color: #bef264;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .transport-detail-text a.transport-detail-link:active {
+      color: #d9f99d;
+    }
+
+    .dest-sub-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      margin-top: 12px;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .dest-sub-links[hidden] {
+      display: none;
+    }
+
+    .dest-sub-link-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      min-height: 76px;
+      padding: 10px 4px;
+      box-sizing: border-box;
+      background: rgba(0, 48, 59, 0.88);
+      border: 2px solid rgba(236, 254, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-bright);
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.15s ease;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .dest-sub-link-btn:active {
+      transform: scale(0.96);
+      background: rgba(0, 90, 102, 0.95);
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+    }
+
+    .dest-sub-link-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .dest-sub-link-label {
+      width: 100%;
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      color: var(--text-bright);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .section-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(153, 246, 228, 0.35), transparent);
+    }
+
+    /* ===== FAQ Section ===== */
+    .faq-section {
+      padding: 20px 16px 40px;
+    }
+
+    .faq-intro {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.55;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      color: var(--text-bright);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .faq-question:active {
+      background: rgba(0, 70, 82, 0.35);
+    }
+
+    .faq-q-num {
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      background: rgba(0, 0, 0, 0.28);
+      padding: 3px 7px;
+      border-radius: 6px;
+      margin-top: 2px;
+    }
+
+    .faq-q-text {
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .faq-arrow {
+      flex-shrink: 0;
+      font-size: 11px;
+      color: var(--light);
+      transition: transform 0.3s ease;
+      margin-top: 4px;
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer-wrap {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-answer {
+      padding: 0 16px 16px;
+      font-size: 12px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(153, 246, 228, 0.15);
+      padding-top: 12px;
+      margin: 0 16px 16px;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Home -->
+    <main class="home-view" id="homeView">
+      <div class="alert-bar">
+        <div class="alert-track" id="alertTrack"></div>
+      </div>
+
+      <header class="top-bar">
+        <p class="brand">🌊 세부 실시간 교통 마스터</p>
+        <h1 class="page-title">실시간 세부 교통상황</h1>
+      </header>
+
+      <section class="map-section">
+        <div class="map-box">
+          <div class="map-box-header">
+            <span class="map-box-title">🚦 현재 도로 정체 현황</span>
+            <div class="traffic-legend">
+              <span class="legend-item"><span class="dot g"></span>원활</span>
+              <span class="legend-item"><span class="dot y"></span>서행</span>
+              <span class="legend-item"><span class="dot r"></span>정체</span>
+            </div>
+          </div>
+          <div class="map-canvas">
+            <div id="map"></div>
+            <button type="button" class="map-locate-btn" id="mapLocateBtn" aria-label="내 위치로 동기화" title="내 위치로">
+              <span class="map-locate-btn-icon" aria-hidden="true">🎯</span>
+              <span class="map-locate-btn-label">내 위치로</span>
+            </button>
+          </div>
+          <p class="map-caption">도로 위 색선(초록·노랑·빨강)은 실시간 교통 정체 표시입니다</p>
+          <p class="map-location-status" id="mapLocationStatus" hidden></p>
+        </div>
+      </section>
+
+      <section class="transport-section">
+        <h2 class="transport-heading">세부 교통수단</h2>
+        <div class="transport-grid" id="transportGrid"></div>
+        <div class="transport-detail-panel" id="transportDetailPanel">
+          <div class="transport-detail-inner">
+            <div class="transport-detail-title" id="transportDetailTitle"></div>
+            <p class="transport-detail-text" id="transportDetailText"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="destination-section">
+        <h2 class="transport-heading">세부 인기 목적지 이동방법</h2>
+        <div class="transport-grid" id="destinationGrid"></div>
+        <div class="transport-detail-panel" id="destinationDetailPanel">
+          <div class="transport-detail-inner">
+            <div class="transport-detail-title" id="destinationDetailTitle"></div>
+            <p class="transport-detail-text" id="destinationDetailText"></p>
+            <div class="dest-sub-links" id="destinationSubLinks" hidden></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq-section">
+        <h2 class="section-label">❓ 자주하는 질문 (FAQ)</h2>
+        <p class="faq-intro">세부 여행자들이 가장 많이 묻는 교통·이동 관련 질문을 모았습니다.</p>
+        <div class="faq-list" id="faqList"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const GOOGLE_MAPS_API_KEY = 'AIzaSyA56YUnyJHHaZwHZLf2tyiELLqJvsPiwMY';
+    /* Google Cloud Console > Map Styles에서 Transit 숨김 후 Map ID 입력 (선택) */
+    const GOOGLE_MAP_ID = '';
+
+    const alertMessages = [
+      '현재 시눌로그 행사로 올드브릿지 통제',
+      '폭우로 AS포투나 침수 주의 — 우회 권장',
+      'NAIA 3터미널 → 세부 항공편 지연 다수 발생',
+      '막탄-세부 연결교량 출퇴근 시간 혼잡'
+    ];
+
+    /* Alert */
+    function initAlertBar() {
+      const track = document.getElementById('alertTrack');
+      const items = [...alertMessages, ...alertMessages];
+      track.innerHTML = items.map(m =>
+        `<span class="alert-item">⚠️ ${m}</span>`
+      ).join('');
+    }
+
+    /* Google Map */
+    let map = null;
+    let mapsLoaded = false;
+    let myLocationMarker = null;
+
+    const CEBU_MAP_CENTER = { lat: 10.3157, lng: 123.8854 };
+    const CEBU_MAP_ZOOM = 12;
+    const MY_LOCATION_ZOOM = 15;
+
+    function showMapPlaceholder() {
+      document.getElementById('map').innerHTML =
+        '<div class="map-placeholder">지도를 불러오는 중…<br>잠시 후 다시 시도해 주세요.</div>';
+    }
+
+    function initGoogleMap() {
+      if (mapsLoaded) return;
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=weekly&callback=onGoogleMapsReady`;
+      script.async = true;
+      script.defer = true;
+      script.onerror = showMapPlaceholder;
+      document.head.appendChild(script);
+    }
+
+    /* 대중교통 정류장·POI 아이콘 숨김 (styles — 래스터 폴백용) */
+    const TRANSIT_STATION_HIDE_STYLES = [
+      {
+        featureType: 'transit.station',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'transit.station',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'poi',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
+      }
+    ];
+
+    let mapIconObserver = null;
+
+    /* 벡터 지도: styles 무시 → Google DOM 아이콘 직접 제거 */
+    function hideGoogleMapPoiIcons() {
+      const mapRoot = document.getElementById('map');
+      if (!mapRoot) return;
+
+      const isMapControl = (el) =>
+        el.closest('.gm-bundled-control, .gm-svpc, .gm-fullscreen-control, .gm-style-cc, .gm-style-mtc');
+
+      mapRoot.querySelectorAll('.gm-style [role="button"]').forEach(el => {
+        if (!isMapControl(el)) {
+          el.style.setProperty('display', 'none', 'important');
+          el.style.setProperty('visibility', 'hidden', 'important');
+        }
+      });
+
+      mapRoot.querySelectorAll('.gm-style img').forEach(img => {
+        if (isMapControl(img)) return;
+        const src = (img.src || '').toLowerCase();
+        if (src.includes('transparent.png')) return;
+        if (src.includes('maps.gstatic.com/mapfiles/ms/icons/') ||
+            src.includes('maps.gstatic.com/intl') ||
+            /transit|bus|stop|rail|metro|train/i.test(src)) {
+          img.style.setProperty('display', 'none', 'important');
+          img.style.setProperty('visibility', 'hidden', 'important');
+          img.style.setProperty('opacity', '0', 'important');
+        }
+      });
+
+      mapRoot.querySelectorAll('.gm-style div[style*="background-image"]').forEach(el => {
+        if (isMapControl(el)) return;
+        const bg = (el.style.backgroundImage || '').toLowerCase();
+        if (/transit|bus|stop|icons\/|ms\/icons/i.test(bg)) {
+          el.style.setProperty('display', 'none', 'important');
+        }
+      });
+    }
+
+    function watchMapIcons() {
+      const mapRoot = document.getElementById('map');
+      if (!mapRoot || mapIconObserver) return;
+      mapIconObserver = new MutationObserver(hideGoogleMapPoiIcons);
+      mapIconObserver.observe(mapRoot, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'style'] });
+    }
+
+    function setMapLocationStatus(message) {
+      const el = document.getElementById('mapLocationStatus');
+      if (!el) return;
+      if (message) {
+        el.textContent = message;
+        el.hidden = false;
+      } else {
+        el.hidden = true;
+        el.textContent = '';
+      }
+    }
+
+    function getMyLocationIcon() {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+        <circle cx="14" cy="14" r="12" fill="#4285F4" fill-opacity="0.22"/>
+        <circle cx="14" cy="14" r="7" fill="#4285F4" stroke="#ffffff" stroke-width="2.5"/>
+      </svg>`;
+      return {
+        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg.trim()),
+        scaledSize: new google.maps.Size(28, 28),
+        anchor: new google.maps.Point(14, 14)
+      };
+    }
+
+    function updateMyLocationOnMap(lat, lng) {
+      if (!map) return;
+      const pos = { lat, lng };
+
+      if (!myLocationMarker) {
+        myLocationMarker = new google.maps.Marker({
+          map,
+          position: pos,
+          icon: getMyLocationIcon(),
+          title: '내 위치',
+          zIndex: 9999,
+          clickable: false
+        });
+      } else {
+        myLocationMarker.setPosition(pos);
+      }
+
+      map.panTo(pos);
+      const zoom = map.getZoom();
+      if (typeof zoom !== 'number' || zoom < MY_LOCATION_ZOOM) {
+        map.setZoom(MY_LOCATION_ZOOM);
+      }
+    }
+
+    const GEO_ERROR_MESSAGES = {
+      1: '위치 권한이 거부되어 세부 중심 지도를 표시합니다.',
+      2: '위치 정보를 사용할 수 없어 세부 중심 지도를 표시합니다.',
+      3: '위치 확인 시간이 초과되어 세부 중심 지도를 표시합니다.'
+    };
+
+    function setLocateButtonSyncing(syncing) {
+      const btn = document.getElementById('mapLocateBtn');
+      if (!btn) return;
+      btn.classList.toggle('is-syncing', syncing);
+      btn.disabled = syncing;
+    }
+
+    /* GPS는 [🎯 내 위치로] 버튼 클릭 시에만 요청 (진입·뒤로가기 시 팝업 없음) */
+    function syncMyLocationFromDevice() {
+      if (!map) return;
+
+      if (!navigator.geolocation) {
+        setMapLocationStatus('이 기기는 위치 서비스를 지원하지 않아 세부 중심 지도를 표시합니다.');
+        return;
+      }
+
+      const geoOptions = {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      };
+
+      setLocateButtonSyncing(true);
+
+      const onGeoSuccess = (position) => {
+        setLocateButtonSyncing(false);
+        if (!position || !position.coords) return;
+        setMapLocationStatus('');
+        updateMyLocationOnMap(position.coords.latitude, position.coords.longitude);
+      };
+
+      const onGeoError = (err) => {
+        setLocateButtonSyncing(false);
+        const code = err && err.code;
+        setMapLocationStatus(
+          GEO_ERROR_MESSAGES[code] || '위치를 가져오지 못해 세부 중심 지도를 표시합니다.'
+        );
+        if (!myLocationMarker) {
+          map.setCenter(CEBU_MAP_CENTER);
+          map.setZoom(CEBU_MAP_ZOOM);
+        }
+      };
+
+      try {
+        navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, geoOptions);
+      } catch (_) {
+        onGeoError({ code: 2 });
+      }
+    }
+
+    function initMapLocateButton() {
+      const btn = document.getElementById('mapLocateBtn');
+      if (!btn || btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        syncMyLocationFromDevice();
+      });
+    }
+
+    window.onGoogleMapsReady = function initMap() {
+      mapsLoaded = true;
+      const mapEl = document.getElementById('map');
+      mapEl.innerHTML = '';
+
+      map = new google.maps.Map(mapEl, {
+        center: CEBU_MAP_CENTER,
+        zoom: CEBU_MAP_ZOOM,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: true,
+        gestureHandling: 'greedy',
+        clickableIcons: false,
+        styles: TRANSIT_STATION_HIDE_STYLES,
+        ...(GOOGLE_MAP_ID ? { mapId: GOOGLE_MAP_ID } : {})
+      });
+
+      google.maps.event.addListener(map, 'tilesloaded', hideGoogleMapPoiIcons);
+      google.maps.event.addListener(map, 'idle', hideGoogleMapPoiIcons);
+      google.maps.event.addListenerOnce(map, 'idle', watchMapIcons);
+
+      const iconCleanup = setInterval(hideGoogleMapPoiIcons, 400);
+      setTimeout(() => clearInterval(iconCleanup), 20000);
+
+      new google.maps.TrafficLayer().setMap(map);
+
+      setTimeout(() => {
+        google.maps.event.trigger(map, 'resize');
+        hideGoogleMapPoiIcons();
+      }, 300);
+    };
+
+    /* ===== FAQ ===== */
+    const faqItems = [
+      {
+        q: '공항에서 막탄 섬 리조트까지 이동 방법은요?',
+        a: '공항에서 막탄 내 리조트(제이파크, 샹그릴라, 플랜테이션베이 등)까지는 공항 정식 화이트 택시, 그랩(Grab) 카, 또는 여행사를 통한 사전 픽업 차량을 이용하는 것이 가장 안전하고 편리합니다. 일반 택시 기준 요금은 약 250~400페소 내외이며, 새벽 시간대나 정체 시 조금 더 추가될 수 있습니다.'
+      },
+      {
+        q: '세부 공항에서 그랩(Grab)은 어떻게 이용하나요?',
+        a: '한국에서 미리 그랩 앱을 설치하고 카드 결제를 연동해 오시는 것이 좋습니다. 공항 입국장을 나와 \'Grab Pick-up Zone\' 표지판이 있는 지정된 장소에서 호출하시면 되며, 매칭된 차량의 번호판을 확인 후 탑승하시면 됩니다.'
+      },
+      {
+        q: '세부 교통체증은 얼마나 심한가요?',
+        a: '세부 시내와 막탄을 잇는 연결 다리 주변 및 출퇴근 시간(오전 7~9시, 오후 5~8시)의 메인 도로는 한국의 악명 높은 출퇴근 정체 그 이상입니다. 평소 20분 거리가 1시간 이상 소요될 수 있으므로, 공항 이동이나 투어 미팅 시 무조건 1~2시간 여유를 두고 움직이셔야 합니다.'
+      },
+      {
+        q: '세부에서 렌터카 운전은 가능한가요?',
+        a: '국제운전면허증이 있으면 법적으로 운전은 가능합니다. 하지만 현지의 독특한 교통 흐름, 중앙선 침범이 잦은 지프니와 오토바이, 불분명한 신호 체계 및 도로 파손 등으로 인해 직접 운전은 매우 위험합니다. 세부에서는 \'기사가 포함된 렌터카\'를 이용하시는 것을 강력히 권장합니다.'
+      },
+      {
+        q: '세부에서 보홀로 이동하는 방법은?',
+        a: '세부 시내에 있는 \'피어 1(Pier 1)\' 여객터미널로 이동하신 후, \'오션젯(OceanJet)\' 같은 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며, 주말이나 성수기에는 매진이 잦으므로 한국에서 미리 페리 티켓을 예약하고 가시는 것이 필수입니다.'
+      },
+      {
+        q: '세부에서 모알보알 이동방법은?',
+        a: '세부 남부 버스 터미널(South Bus Terminal)에서 모알보알행 시외버스(에어컨/넌에어컨)를 타거나, 터미널 인근의 V-hire(공동 배차 밴)를 이용합니다. 시간적 여유와 편안함을 원하신다면 기사 포함 렌트카(프라이빗 차량)를 단독 렌트해 이동하는 것이 가장 좋습니다. 소요 시간은 약 3시간~3시간 반입니다.'
+      },
+      {
+        q: '세부에서 오슬롭 이동방법은?',
+        a: '모알보알과 마찬가지로 남부 버스 터미널에서 오슬롭(Bato via Oslob)행 버스를 탑승합니다. 고래상어 투어 시작 시간(오전 6시~7시)에 맞추기 위해 보통 세부 시내에서 새벽 2~3시에 출발해야 하므로, 대부분의 여행객은 버스보다는 안전하고 빠른 단독 투어 차량(렌트카)을 이용합니다. (약 3~4시간 소요)'
+      },
+      {
+        q: '세부에서 카모테스 이동방법은?',
+        a: '세부 북부에 위치한 \'다나오 포트(Danao Port)\'까지 차량으로 이동한 후, 카모테스행 페리(주로 조이풀 또는 잘리아 페리)를 타고 들어갑니다. 최근에는 세부 피어 1에서도 제한적으로 여객선이 운항하므로, 출발 전 최신 선박 시간표와 운항 여부를 반드시 교차 확인하셔야 합니다.'
+      },
+      {
+        q: '가족여행 시 차량 렌트가 좋을까요?',
+        a: '아이나 부모님을 동반한 가족여행이라면 기사 포함 차량 렌트가 무조건 유리합니다. 세부의 더운 날씨에 길거리에서 택시나 그랩을 잡으려고 대기하는 것 자체가 가족들에게 큰 부담이며, 짐 보관 및 원하는 명소로의 자유로운 이동을 고려하면 비용 대비 만족도가 가장 높습니다.'
+      },
+      {
+        q: '세부에서 관광지 이동은 패키지가 좋을까요, 개별 이동이 좋을까요?',
+        a: '시내 쇼핑몰이나 맛집 탐방은 그랩을 이용한 개별 이동이 경제적입니다. 하지만 오슬롭, 모알보알, 시라오가든 같은 외곽 관광지나 호핑 투어의 경우, 교통편 인프라가 닿지 않고 흥정 스트레스가 심하므로 현지 전문 여행사의 단독 프라이빗 투어(개별 패키지)를 이용하시는 것이 안전과 일정 관리 면에서 압도적으로 좋습니다.'
+      },
+      {
+        q: '공항에서 그랩(Grab)이 잘 잡히나요? 그랩 탑승 위치는 어디인가요?',
+        a: '비행기가 몰리는 피크 시간대(오전 11시~오후 2시, 새벽 12시~2시)에는 배차가 지연되거나 가격이 2배 이상 폭등할 수 있습니다. 공항 터미널 2(국제선) 기준, 도착 로비를 나와 우측으로 쭉 걸어가시면 \'Grab Car Pick-up Zone\' 기둥과 부스가 마련되어 있습니다.'
+      },
+      {
+        q: '새벽 도착 후 바로 오슬롭이나 바디안(가와산)으로 가고 싶은데 공항에서 바로 출발 가능한가요?',
+        a: '네, 가장 많이 활용하시는 효율적인 동선입니다! 다만 새벽 1~2시에 공항에서 대중교통 버스를 타고 이동하는 것은 사실상 불가능하므로, 한국 출발 전에 \'공항 픽업 가이드 및 단독 렌트카 차량\'을 미리 예약해 두셔야 합니다. 공항 입국장에서 기사를 만나 차량에 짐을 싣고 바로 오슬롭으로 출발(약 3시간 반 소요)하시면 아침 일찍 고래상어를 보실 수 있습니다.'
+      },
+      {
+        q: '그랩카(GrabCar)와 그랩택시(GrabTaxi)의 차이점은 무엇이고, 어떤 게 더 유리한가요?',
+        a: '\'그랩카\'는 개인 승용차가 오는 일종의 사설 픽업이며 앱에 표시된 정찰제 금액만 딱 결제됩니다. \'그랩택시\'는 일반 미터기 택시가 매칭되는 방식이며 미터기 요금에 그랩 호출 수수료가 추가로 붙습니다. 관광객에게는 바가지 요금 시비가 없고 차량 상태가 훨씬 깨끗하고 쾌적한 \'그랩카(GrabCar)\'가 훨씬 유리하고 안전합니다.'
+      },
+      {
+        q: '길거리에서 흔히 보이는 지프니(Jeepney)나 트라이시클(Tricycle)을 관광객이 타도 안전한가요? 요금은 얼마인가요?',
+        a: '지프니와 트라이시클은 현지인들의 소중한 발이지만, 노선 안내가 없고 에어컨이 없어 매연에 노출되며, 무엇보다 소매치기 등 치안 위험이 존재합니다. 기본 요금은 15~30페소 내외로 매우 저렴하지만, 안전한 여행을 위해 특별한 로컬 체험 목적이 아니라면 일반 관광객분들은 그랩이나 택시를 타시는 것을 권장합니다.'
+      },
+      {
+        q: '세부 시내 교통체증(트래픽 잼)이 가장 심한 요일과 시간대는 언제인가요?',
+        a: '매일 출퇴근 시간(07:00~09:00, 17:00~20:00)은 항상 정체가 심합니다. 그중에서도 가장 최악인 시간은 금요일 오후 시간대와 주말 토요일 저녁 시간대입니다. 주말을 즐기려는 현지인들과 대형 쇼핑몰 방문 차량이 동시에 쏟아져 나오기 때문입니다. 이 시간대에는 평소보다 이동 시간을 2배 이상 넉넉히 잡으셔야 합니다.'
+      },
+      {
+        q: '세부에서 오토바이나 렌트카를 직접 운전해서 다녀도 괜찮을까요?',
+        a: '절대 추천하지 않습니다! 현지 운전자들의 칼치기, 신호 무시, 갑작스러운 보행자 횡단이 일상적이며, 사고 발생 시 과실 비율 산정 등에서 외국인 여행객이 압도적으로 불리하고 복잡한 법적 문제에 휘말릴 수 있습니다. 안전하고 편안한 세부 여행을 위해 이동은 대중교통(그랩)이나 기사 포함 차량을 이용해 주세요.'
+      }
+    ];
+
+    function renderFaq() {
+      const container = document.getElementById('faqList');
+      faqItems.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.className = 'faq-item';
+        el.innerHTML = `
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span class="faq-q-num">Q${i + 1}</span>
+            <span class="faq-q-text">${item.q}</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer-wrap">
+            <p class="faq-answer">${item.a}</p>
+          </div>`;
+        container.appendChild(el);
+      });
+
+      container.addEventListener('click', e => {
+        const btn = e.target.closest('.faq-question');
+        if (!btn) return;
+        const item = btn.parentElement;
+        const wrap = item.querySelector('.faq-answer-wrap');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        container.querySelectorAll('.faq-item.open').forEach(openItem => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            openItem.querySelector('.faq-answer-wrap').style.maxHeight = '0';
+          }
+        });
+
+        if (isOpen) {
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          wrap.style.maxHeight = '0';
+        } else {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          wrap.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    }
+
+    /* ===== Transport Grid ===== */
+    const transportModes = [
+      { id: 1, icon: '🛵', name: '트라이시클', desc: '💡 골목길 및 단거리 이동용 필수 바이크!<br>- 특징: 세부나 막탄 내 리조트 인근 골목길이나 단거리를 이동할 때 가장 흔히 타는 수단입니다.<br>- 이용 팁: 탑승하기 전 기사와 목적지까지의 요금을 무조건 흥정하고 타는 것이 필수입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 트라이시클 이용 가이드 보기</a>' },
+      { id: 2, icon: '🚌', name: '지프니(멀티캅)', desc: '💡 로컬인들의 가장 대중적인 메인 이동수단!<br>- 특징: 세부 시내와 막탄 전역을 촘촘하게 연결하는 필리핀 고유의 대중교통입니다.<br>- 이용 팁: 에어컨이 없어 매연과 더위에 노출되며, 탑승 시 소매치기 등 치안에 항상 주의해야 합니다. 기본요금은 15~20페소 내외입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 지프니 탑승 및 이용 가이드 보기</a>' },
+      { id: 3, icon: '⚡🔋🚌', name: 'E-지프니', desc: '💡 세부·막탄의 신형 에어컨 프리미엄 지프니!<br>- 특징: 매연과 더위가 없는 100% 전기차량이며, 주요 로컬 거점을 쾌적하게 연결합니다.<br>- 대표 노선: 라푸라푸 퍼블릭 마켓 - 바박 - 코르도바 - 마리곤돈 크로싱 - 바삭 - 군옵을 순환하는 시계방향(Clockwise) 루프 서비스.<br>- 요금: 로컬 지프니와 비슷하게 거리 비례로 우려되며, 에어컨이 있어 아주 시원합니다. 잔돈(동전)을 미리 준비해 탑승하는 것이 매너입니다.' },
+      { id: 4, icon: '🚐', name: '우돗코버스', desc: '💡 특정 로컬 노선을 순환하는 미니 에어컨 버스!<br>- 특징: 지프니보다 크고 일반 버스보다 컴팩트하여, 현지 정체 구간을 영리하게 통과하는 유용한 수단입니다.<br>- 이용 팁: 에어컨이 있어 쾌적하게 이동할 수 있으며, 현지인들의 출퇴근 메인 코스를 정찰제로 운행합니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222043003790" target="_self" class="transport-detail-link">👉 세부 우돗코버스 노선 및 이용 팁 보기</a>' },
+      { id: 5, icon: '🚍', name: '마이버스', desc: '💡 공항과 시내 주요 거점을 왕복하는 대형 에어컨 버스!<br>- 특징: 막탄 공항에서 세부 시내 SM 몰 등 주요 포인트를 안전하고 쾌적하게 연결합니다.<br>- 이용 팁: 캐리어를 실을 수 있는 넉넉한 공간이 있으며, 운행 시간표를 미리 확인하고 이용하시는 것이 좋습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/220556748822" target="_self" class="transport-detail-link">👉 세부 마이버스 노선 및 시간표 보기</a>' },
+      { id: 6, icon: '🚕', name: '일반택시', desc: '💡 가장 흔하게 볼 수 있는 기본 화이트 택시!<br>- 특징: 세부 시내와 막탄 전역을 언제든 쉽게 잡아탈 수 있는 대중적인 수단입니다.<br>- 이용 팁: 탑승하자마자 "미터 플리즈"를 요구해 미터기가 켜졌는지 반드시 확인하시고, 기사가 잔돈이 없다고 하는 경우가 많으니 미리 소액권(20, 50, 100페소)을 준비해 탑승하세요.<br>- <a href="https://m.blog.naver.com/aalove0902/80210855292" target="_self" class="transport-detail-link">👉 세부 일반택시 바가지 예방 및 이용 팁 보기</a>' },
+      { id: 7, icon: '🟡', name: '공항택시', desc: '옐로우 택시. 기본요금 및 거리당 요금이 일반 택시보다 비싼 편.' },
+      { id: 8, icon: '✨', name: '프리미엄택시', desc: '💡 일반 택시보다 넓고 쾌적한 고급형 메인 택시!<br>- 특징: 주로 승용차형 일반 택시보다 차량 체급이 크거나(Innova 등 SUV 차종), 차량 상태가 훨씬 깨끗하게 관리되는 프리미엄급 로컬 택시 서비스입니다.<br>- 이용 팁: 짐이 많거나 가족 단위로 이동할 때 그랩카 대안으로 이용하기 좋으며, 일반 택시보다 기본요금이 조금 더 높게 책정되어 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223019374841" target="_self" class="transport-detail-link">👉 세부 프리미엄택시 종류 및 탑승 팁 보기</a>' },
+      { id: 9, icon: '🟢', name: '그린택시', desc: '친환경 또는 특정 브랜드의 깨끗한 로컬 메인 택시 종류 중 하나.' },
+      { id: 10, icon: '📱', name: '그랩', desc: '💡 세부 자유여행객(FIT)의 필수 교통 앱!<br>- 특징: 미터기 흥정이나 바가지 요금 시비가 없어 관광객이 가장 안전하게 이용할 수 있습니다.<br>- 이용 팁: 호출 시 정찰제인 "그랩카(GrabCar)"와 미터기 기준인 "그랩택시(GrabTaxi)"를 선택할 수 있습니다. 피크 시간대에는 배차가 지연되거나 요금이 오를 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222941029729" target="_self" class="transport-detail-link">👉 세부 그랩(Grab) 이용 방법 및 꿀팁 보기</a>' },
+      { id: 11, icon: '🚗', name: '렌트카', desc: '💡 가족여행 및 외곽 투어 시 가장 추천하는 수단!<br>- 특징: 세부는 도로 신호 체계가 복잡하고 현지 운전 문화가 독특해 직접 운전은 위험하므로, "기사가 포함된 단독 렌트카" 이용이 정석입니다.<br>- 이용 팁: 오슬롭 고래상어, 모알보알 거북이, 시내 쇼핑몰 투어 등 원하는 일정에 맞춰 가장 편안하고 안전하게 이동할 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222844608772" target="_self" class="transport-detail-link">👉 세부 기사포함 렌트카 예약 및 이용 팁 보기</a>' },
+      { id: 12, icon: '⛵', name: '배', desc: '막탄 앙실포트-올랑고 섬 방카 및 세부 피어 항구-각종 섬 이동 페리 정보.' }
+    ];
+
+    let activeTransportId = null;
+
+    function renderTransportGrid() {
+      const grid = document.getElementById('transportGrid');
+      const panel = document.getElementById('transportDetailPanel');
+      const titleEl = document.getElementById('transportDetailTitle');
+      const textEl = document.getElementById('transportDetailText');
+      const inner = panel.querySelector('.transport-detail-inner');
+
+      transportModes.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'transport-btn';
+        btn.dataset.id = item.id;
+        btn.innerHTML = `
+          <span class="transport-btn-icon">${item.icon}</span>
+          <span class="transport-btn-label">${item.name}</span>`;
+        grid.appendChild(btn);
+      });
+
+      grid.addEventListener('click', e => {
+        const btn = e.target.closest('.transport-btn');
+        if (!btn) return;
+
+        const id = Number(btn.dataset.id);
+        const item = transportModes.find(t => t.id === id);
+        if (!item) return;
+
+        if (activeTransportId === id) {
+          closeTransportDetail();
+          return;
+        }
+
+        closeDestinationDetail();
+        grid.querySelectorAll('.transport-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTransportId = id;
+
+        titleEl.innerHTML = `<span>${item.icon}</span> ${item.name}`;
+        textEl.innerHTML = item.desc;
+
+        panel.classList.add('open');
+        panel.style.maxHeight = inner.scrollHeight + 'px';
+      });
+    }
+
+    /* ===== Destination Grid (1x4) ===== */
+    const destinationModes = [
+      {
+        id: 1,
+        icon: '🦈🚗',
+        name: '오슬롭 이동',
+        desc: '💡 고래상어를 만나러 가는 남부 최고의 명소!<br>- 🚍 대중교통 이용 시: 세부 남부 버스 터미널(South Bus Terminal)에서 바토(Bato via Oslob)행 시외버스를 탑승합니다. 새벽 2~3시에는 출발해야 오전 피크 타임에 맞춰 도착할 수 있습니다.<br><a href="https://m.blog.naver.com/aalove0902/223721449587" target="_self" class="transport-detail-link">👉 버스로 이동방법 자세히보기</a><br><a href="https://m.blog.naver.com/aalove0902/223801858671" target="_self" class="transport-detail-link">👉 오슬롭에서 모알보알 이동방법 자세히보기</a><br>- 🚗 프라이빗 추천: 고래상어 투어 시작 시간과 체력 안배를 위해, 대부분의 자유여행객은 새벽 공항 픽업이나 리조트 픽업이 포함된 "기사 포함 단독 투어 차량"을 절대적으로 선호합니다. (편도 약 3~4시간 소요)'
+      },
+      {
+        id: 2,
+        icon: '🐢🌊',
+        name: '모알보알 이동',
+        desc: '💡 정겨운 정취와 거북이, 정박형 정어리 떼의 천국!<br>- 🚍 대중교통 이용 시: 남부 버스 터미널에서 모알보알행 에어컨 버스를 타거나 터미널 인근의 V-hire(공동 배차 밴)를 이용해 모알보알 퍼블릭 마켓에 하차 후, 트라이시클을 타고 파낙사마 비치로 들어갑니다.<br><a href="https://m.blog.naver.com/aalove0902/223721449587" target="_self" class="transport-detail-link">👉 버스로 이동방법 자세히보기</a><br>- 🚗 프라이빗 추천: 무거운 캐리어나 스노클링 장비가 있다면 흥정 스트레스가 없고 원하는 시간에 출발할 수 있는 "단독 렌트카(기사 포함)"를 대절해 다이렉트로 이동하는 것이 가장 편리합니다. (편도 약 3시간~3시간 반 소요)'
+      },
+      {
+        id: 3,
+        icon: '🚢🏝️',
+        name: '보홀 이동',
+        desc: '💡 키홀 초콜릿 힐과 타르시어 안경원숭이의 섬!<br>- ⛴️ 페리(속선) 이용 시: 세부 시내의 "피어 1(Pier 1)" 여객터미널로 이동하여 오션젯(OceanJet) 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며, 주말이나 성수기에는 매진이 잦으므로 사전 예약을 필수로 권장합니다.<br>- 💡 주의사항: 현지 기상 악화 시 운항이 지연되거나 취소될 수 있으므로, 당일치기 투어 시에는 항상 리턴 페리 시간표를 철저히 교차 확인하세요.',
+        subLinks: [
+          { icon: '🎫', label: '오션젯 티켓구입방법', url: 'https://m.blog.naver.com/aalove0902/223313062752' },
+          { icon: '⚓', label: '세부 피어1', url: 'https://m.blog.naver.com/aalove0902/223389448746' },
+          { icon: '🌅', label: '보홀 타그빌라란항구', url: 'https://m.blog.naver.com/aalove0902/223344633565' },
+          { icon: '💡', label: '보홀 알면좋은정보', url: 'https://m.blog.naver.com/aalove0902/222954126767' }
+        ]
+      },
+      {
+        id: 4,
+        icon: '🏖️⛵',
+        name: '카모테스 이동',
+        desc: '💡 오염되지 않은 순수한 자연과 동굴 수영의 명소!<br>- ⛴️ 배편 이용 시: 세부 북부에 위치한 "다나오 포트(Danao Port)"까지 차량으로 이동한 후, 카모테스(콘수엘로 항구)행 페리를 타고 들어갑니다. (여객선으로 약 1시간 반~2시간 소요)<br>- 💡 이용 팁: 세부 피어 1 터미널에서도 제한적으로 직항 여객선이 운항하는 경우가 있으나, 시즌과 요일에 따라 운항 여부 변화가 심하므로 출발 전 최신 선박 스케줄을 반드시 확인해야 합니다.'
+      }
+    ];
+
+    let activeDestinationId = null;
+
+    function closeTransportDetail() {
+      activeTransportId = null;
+      const grid = document.getElementById('transportGrid');
+      const panel = document.getElementById('transportDetailPanel');
+      if (!grid || !panel) return;
+      grid.querySelectorAll('.transport-btn').forEach(b => b.classList.remove('active'));
+      panel.classList.remove('open');
+      panel.style.maxHeight = '0';
+    }
+
+    function closeDestinationDetail() {
+      activeDestinationId = null;
+      const grid = document.getElementById('destinationGrid');
+      const panel = document.getElementById('destinationDetailPanel');
+      const subLinks = document.getElementById('destinationSubLinks');
+      if (!grid || !panel) return;
+      grid.querySelectorAll('.transport-btn').forEach(b => b.classList.remove('active'));
+      if (subLinks) {
+        subLinks.hidden = true;
+        subLinks.innerHTML = '';
+      }
+      panel.classList.remove('open');
+      panel.style.maxHeight = '0';
+    }
+
+    function renderDestinationSubLinks(item) {
+      const wrap = document.getElementById('destinationSubLinks');
+      if (!wrap) return;
+
+      if (!item.subLinks || !item.subLinks.length) {
+        wrap.hidden = true;
+        wrap.innerHTML = '';
+        return;
+      }
+
+      wrap.hidden = false;
+      wrap.innerHTML = item.subLinks.map(link => `
+        <a href="${link.url}" target="_self" class="dest-sub-link-btn">
+          <span class="dest-sub-link-icon">${link.icon}</span>
+          <span class="dest-sub-link-label">${link.label}</span>
+        </a>
+      `).join('');
+    }
+
+    function openDestinationDetailPanel(panel, inner) {
+      panel.classList.add('open');
+      requestAnimationFrame(() => {
+        panel.style.maxHeight = inner.scrollHeight + 'px';
+      });
+    }
+
+    function renderDestinationGrid() {
+      const grid = document.getElementById('destinationGrid');
+      const panel = document.getElementById('destinationDetailPanel');
+      const titleEl = document.getElementById('destinationDetailTitle');
+      const textEl = document.getElementById('destinationDetailText');
+      const inner = panel.querySelector('.transport-detail-inner');
+
+      destinationModes.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'transport-btn';
+        btn.dataset.id = item.id;
+        btn.innerHTML = `
+          <span class="transport-btn-icon">${item.icon}</span>
+          <span class="transport-btn-label">${item.name}</span>`;
+        grid.appendChild(btn);
+      });
+
+      grid.addEventListener('click', e => {
+        const btn = e.target.closest('.transport-btn');
+        if (!btn) return;
+
+        const id = Number(btn.dataset.id);
+        const item = destinationModes.find(d => d.id === id);
+        if (!item) return;
+
+        if (activeDestinationId === id) {
+          closeDestinationDetail();
+          return;
+        }
+
+        closeTransportDetail();
+        grid.querySelectorAll('.transport-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeDestinationId = id;
+
+        titleEl.innerHTML = `<span>${item.icon}</span> ${item.name}`;
+        textEl.innerHTML = item.desc;
+        renderDestinationSubLinks(item);
+        openDestinationDetailPanel(panel, inner);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initAlertBar();
+      renderTransportGrid();
+      renderDestinationGrid();
+      renderFaq();
+      initMapLocateButton();
+      initGoogleMap();
+    });
+  </script>
+</body>
+</html>
