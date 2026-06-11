@@ -3,7 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>세부 실시간 교통 마스터</title>
+  <title>세부 교통 완전 가이드 | 그랩·택시·버스·렌트카 이용방법</title>
+
+  <meta name="description" content="세부 교통 완전 가이드. 그랩·택시·지프니·버스·렌트카 이용방법, 공항에서 리조트 이동, 오슬롭·모알보알·보홀 이동방법을 한눈에 확인하세요." />
+  <meta name="keywords" content="세부교통, 세부그랩, 세부택시, 세부지프니, 세부렌트카, 공항택시, 오슬롭이동방법, 모알보알이동방법, 보홀페리, 세부버스" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://cebu-traffic-master.vercel.app" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="세부여행플래너" />
+  <meta property="og:url" content="https://cebu-traffic-master.vercel.app" />
+  <meta property="og:title" content="세부 교통 완전 가이드 | 그랩·택시·버스·렌트카" />
+  <meta property="og:description" content="세부 교통 완전 가이드. 그랩·택시·지프니·버스·렌트카 이용방법, 공항에서 리조트 이동, 오슬롭·모알보알·보홀 이동방법을 한눈에 확인하세요." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:image" content="https://cebu-traffic-master.vercel.app/og-thumbnail.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="세부 교통 완전 가이드 — 그랩·택시·지프니·렌트카 이용방법" />
+  <meta name="twitter:image" content="https://cebu-traffic-master.vercel.app/og-thumbnail.png" />
+  <meta name="twitter:title" content="세부 교통 완전 가이드 | 그랩·택시·버스·렌트카" />
+  <meta name="twitter:description" content="세부 교통 완전 가이드. 그랩·택시·지프니·버스·렌트카 이용방법을 한눈에 확인하세요." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://cebu-traffic-master.vercel.app/#webapplication",
+        "name": "세부 교통 완전 가이드",
+        "description": "세부 교통 완전 가이드. 그랩·택시·지프니·버스·렌트카 이용방법, 공항에서 리조트 이동, 오슬롭·모알보알·보홀 이동방법 안내.",
+        "url": "https://cebu-traffic-master.vercel.app",
+        "applicationCategory": "TravelApplication",
+        "inLanguage": "ko-KR",
+        "isAccessibleForFree": true,
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://cebu-planner-home.vercel.app/#website",
+          "name": "세부여행플래너"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://cebu-traffic-master.vercel.app/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "공항에서 막탄 섬 리조트까지 이동 방법은요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "공항 정식 화이트 택시, 그랩(Grab) 카, 또는 여행사를 통한 사전 픽업 차량을 이용하는 것이 가장 안전하고 편리합니다. 일반 택시 기준 요금은 약 250~400페소 내외입니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부 공항에서 그랩(Grab)은 어떻게 이용하나요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "한국에서 미리 그랩 앱을 설치하고 카드 결제를 연동해 오시는 것이 좋습니다. 공항 입국장을 나와 Grab Pick-up Zone 표지판이 있는 지정된 장소에서 호출하시면 됩니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부에서 보홀로 이동하는 방법은?",
+            "acceptedAnswer": { "@type": "Answer", "text": "세부 피어 1 여객터미널에서 오션젯 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며 사전 예약을 권장합니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부에서 오슬롭 이동방법은?",
+            "acceptedAnswer": { "@type": "Answer", "text": "남부 버스 터미널에서 오슬롭행 버스를 탑승하거나 기사 포함 단독 투어 차량을 이용합니다. 편도 약 3~4시간 소요됩니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부에서 모알보알 이동방법은?",
+            "acceptedAnswer": { "@type": "Answer", "text": "남부 버스 터미널에서 모알보알행 버스를 타거나 기사 포함 렌트카를 이용합니다. 편도 약 3시간~3시간 반 소요됩니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부 교통체증은 얼마나 심한가요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "출퇴근 시간(오전 7~9시, 오후 5~8시)의 메인 도로는 매우 심합니다. 평소 20분 거리가 1시간 이상 소요될 수 있으므로 1~2시간 여유를 두고 움직이세요." }
+          },
+          {
+            "@type": "Question",
+            "name": "그랩카(GrabCar)와 그랩택시(GrabTaxi)의 차이점은?",
+            "acceptedAnswer": { "@type": "Answer", "text": "그랩카는 정찰제 금액만 결제되고, 그랩택시는 미터기 요금에 수수료가 추가됩니다. 관광객에게는 그랩카가 더 유리합니다." }
+          },
+          {
+            "@type": "Question",
+            "name": "세부에서 렌터카 운전은 가능한가요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "국제운전면허증이 있으면 가능하지만 현지 운전 환경이 위험해 기사가 포함된 렌터카 이용을 강력히 권장합니다." }
+          }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://cebu-planner-home.vercel.app/#organization",
+        "name": "세부여행플래너",
+        "url": "https://cebu-planner-home.vercel.app",
+        "sameAs": ["https://blog.naver.com/aalove0902"]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://cebu-traffic-master.vercel.app/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "세부여행플래너",
+            "item": "https://cebu-planner-home.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "세부 교통 가이드",
+            "item": "https://cebu-traffic-master.vercel.app"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -46,7 +162,8 @@
     .transport-section,
     .destination-section,
     .faq-section,
-    .alert-bar,
+    .app-hub-nav,
+    .app-hub-item,
     .map-placeholder,
     .map-location-status,
     .map-locate-btn,
@@ -67,7 +184,7 @@
     /* ===== Home (scroll) ===== */
     .home-view {
       min-height: 100vh;
-      padding-bottom: 32px;
+      padding-bottom: 96px;
     }
 
     .top-bar {
@@ -89,50 +206,6 @@
       font-weight: 700;
       letter-spacing: -0.5px;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-    }
-
-    /* Alert */
-    .alert-bar {
-      height: 38px;
-      background: linear-gradient(90deg, #C1121F, var(--accent), #E63946);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .alert-bar::before, .alert-bar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 20px;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .alert-bar::before { left: 0; background: linear-gradient(90deg, #C1121F, transparent); }
-    .alert-bar::after { right: 0; background: linear-gradient(-90deg, #E63946, transparent); }
-
-    .alert-track {
-      display: flex;
-      white-space: nowrap;
-      animation: marquee 26s linear infinite;
-    }
-
-    .alert-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--white);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 0 28px;
-    }
-
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
     }
 
     /* Large Traffic Map */
@@ -348,26 +421,37 @@
       gap: 6px;
     }
 
+    #destinationGrid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 6px;
+    }
+
     .transport-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 8px;
       width: 100%;
-      min-height: 76px;
-      padding: 8px 3px;
+      min-height: 90px;
+      padding: 12px 6px;
       box-sizing: border-box;
-      background: rgba(0, 48, 59, 0.88);
-      border: 2px solid rgba(236, 254, 255, 0.08);
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
       cursor: pointer;
       font-family: inherit;
       color: var(--text-bright);
-      transition: border-color 0.25s ease, background 0.25s ease, transform 0.15s ease;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
       word-break: break-all;
       white-space: normal;
       overflow-wrap: break-word;
+    }
+
+    .transport-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
     .transport-btn:active {
@@ -375,24 +459,29 @@
     }
 
     .transport-btn.active {
-      border-color: #38bdf8;
-      background: rgba(0, 90, 102, 0.95);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
     .transport-btn-icon {
-      font-size: 1.8rem;
+      font-size: 2rem;
       line-height: 1;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
 
     .transport-btn-label {
-      width: 100%;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 700;
       line-height: 1.25;
       text-align: center;
-      color: var(--text-bright);
+      color: #ffffff;
       word-break: break-all;
       white-space: normal;
       overflow-wrap: break-word;
@@ -535,7 +624,7 @@
 
     /* ===== FAQ Section ===== */
     .faq-section {
-      padding: 20px 16px 40px;
+      padding: 20px 16px 24px;
     }
 
     .faq-intro {
@@ -633,19 +722,90 @@
       white-space: normal;
       overflow-wrap: break-word;
     }
+
+    /* ===== App Hub Navigation ===== */
+    .app-hub-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(4, 47, 46, 0.97);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 0 max(16px, env(safe-area-inset-bottom));
+      margin-top: 24px;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .app-hub-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 4px;
+      text-decoration: none;
+      color: #ffffff;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+      transition: opacity 0.2s ease;
+    }
+
+    .app-hub-item:last-child {
+      border-right: none;
+    }
+
+    .app-hub-item:active {
+      opacity: 0.82;
+    }
+
+    .app-hub-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .app-hub-icon.food {
+      background: linear-gradient(135deg, #FF9500, #FF6B00);
+    }
+
+    .app-hub-icon.places {
+      background: linear-gradient(135deg, #FF2D55, #FF6B8A);
+    }
+
+    .app-hub-icon.stay {
+      background: linear-gradient(135deg, #007AFF, #5AC8FA);
+    }
+
+    .app-hub-icon.schedule {
+      background: linear-gradient(135deg, #5856D6, #7B79F7);
+    }
+
+    .app-hub-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.2;
+      word-break: break-all;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
   </style>
 </head>
 <body>
   <div class="app">
     <!-- Home -->
     <main class="home-view" id="homeView">
-      <div class="alert-bar">
-        <div class="alert-track" id="alertTrack"></div>
-      </div>
-
       <header class="top-bar">
         <p class="brand">🌊 세부 실시간 교통 마스터</p>
-        <h1 class="page-title">실시간 세부 교통상황</h1>
+        <h1 class="page-title">세부 교통 완전 가이드 | 그랩·택시·지프니·렌트카</h1>
       </header>
 
       <section class="map-section">
@@ -683,7 +843,7 @@
 
       <section class="destination-section">
         <h2 class="transport-heading">세부 인기 목적지 이동방법</h2>
-        <div class="transport-grid" id="destinationGrid"></div>
+        <div class="transport-grid" id="destinationGrid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px;"></div>
         <div class="transport-detail-panel" id="destinationDetailPanel">
           <div class="transport-detail-inner">
             <div class="transport-detail-title" id="destinationDetailTitle"></div>
@@ -706,22 +866,6 @@
     /* Google Cloud Console > Map Styles에서 Transit 숨김 후 Map ID 입력 (선택) */
     const GOOGLE_MAP_ID = '';
 
-    const alertMessages = [
-      '현재 시눌로그 행사로 올드브릿지 통제',
-      '폭우로 AS포투나 침수 주의 — 우회 권장',
-      'NAIA 3터미널 → 세부 항공편 지연 다수 발생',
-      '막탄-세부 연결교량 출퇴근 시간 혼잡'
-    ];
-
-    /* Alert */
-    function initAlertBar() {
-      const track = document.getElementById('alertTrack');
-      const items = [...alertMessages, ...alertMessages];
-      track.innerHTML = items.map(m =>
-        `<span class="alert-item">⚠️ ${m}</span>`
-      ).join('');
-    }
-
     /* Google Map */
     let map = null;
     let mapsLoaded = false;
@@ -732,17 +876,32 @@
     const MY_LOCATION_ZOOM = 15;
 
     function showMapPlaceholder() {
-      document.getElementById('map').innerHTML =
-        '<div class="map-placeholder">지도를 불러오는 중…<br>잠시 후 다시 시도해 주세요.</div>';
+      const mapEl = document.getElementById('map');
+      if (!mapEl) return;
+      mapEl.innerHTML = '<div class="map-placeholder">지도를 불러오는 중입니다…<br>잠시 후 자동으로 다시 시도합니다.</div>';
+      setTimeout(() => {
+        if (!mapsLoaded) {
+          mapsLoaded = false;
+          initGoogleMap();
+        }
+      }, 3000);
     }
 
     function initGoogleMap() {
       if (mapsLoaded) return;
+      if (typeof google !== 'undefined' && google.maps) {
+        window.onGoogleMapsReady();
+        return;
+      }
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=weekly&callback=onGoogleMapsReady`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=weekly&callback=onGoogleMapsReady&loading=async`;
       script.async = true;
       script.defer = true;
-      script.onerror = showMapPlaceholder;
+      script.onerror = () => {
+        setTimeout(() => {
+          if (!mapsLoaded) showMapPlaceholder();
+        }, 3000);
+      };
       document.head.appendChild(script);
     }
 
@@ -1076,21 +1235,75 @@
 
     /* ===== Transport Grid ===== */
     const transportModes = [
-      { id: 1, icon: '🛵', name: '트라이시클', desc: '💡 골목길 및 단거리 이동용 필수 바이크!<br>- 특징: 세부나 막탄 내 리조트 인근 골목길이나 단거리를 이동할 때 가장 흔히 타는 수단입니다.<br>- 이용 팁: 탑승하기 전 기사와 목적지까지의 요금을 무조건 흥정하고 타는 것이 필수입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 트라이시클 이용 가이드 보기</a>' },
-      { id: 2, icon: '🚌', name: '지프니(멀티캅)', desc: '💡 로컬인들의 가장 대중적인 메인 이동수단!<br>- 특징: 세부 시내와 막탄 전역을 촘촘하게 연결하는 필리핀 고유의 대중교통입니다.<br>- 이용 팁: 에어컨이 없어 매연과 더위에 노출되며, 탑승 시 소매치기 등 치안에 항상 주의해야 합니다. 기본요금은 15~20페소 내외입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 지프니 탑승 및 이용 가이드 보기</a>' },
-      { id: 3, icon: '⚡🔋🚌', name: 'E-지프니', desc: '💡 세부·막탄의 신형 에어컨 프리미엄 지프니!<br>- 특징: 매연과 더위가 없는 100% 전기차량이며, 주요 로컬 거점을 쾌적하게 연결합니다.<br>- 대표 노선: 라푸라푸 퍼블릭 마켓 - 바박 - 코르도바 - 마리곤돈 크로싱 - 바삭 - 군옵을 순환하는 시계방향(Clockwise) 루프 서비스.<br>- 요금: 로컬 지프니와 비슷하게 거리 비례로 우려되며, 에어컨이 있어 아주 시원합니다. 잔돈(동전)을 미리 준비해 탑승하는 것이 매너입니다.' },
-      { id: 4, icon: '🚐', name: '우돗코버스', desc: '💡 특정 로컬 노선을 순환하는 미니 에어컨 버스!<br>- 특징: 지프니보다 크고 일반 버스보다 컴팩트하여, 현지 정체 구간을 영리하게 통과하는 유용한 수단입니다.<br>- 이용 팁: 에어컨이 있어 쾌적하게 이동할 수 있으며, 현지인들의 출퇴근 메인 코스를 정찰제로 운행합니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222043003790" target="_self" class="transport-detail-link">👉 세부 우돗코버스 노선 및 이용 팁 보기</a>' },
-      { id: 5, icon: '🚍', name: '마이버스', desc: '💡 공항과 시내 주요 거점을 왕복하는 대형 에어컨 버스!<br>- 특징: 막탄 공항에서 세부 시내 SM 몰 등 주요 포인트를 안전하고 쾌적하게 연결합니다.<br>- 이용 팁: 캐리어를 실을 수 있는 넉넉한 공간이 있으며, 운행 시간표를 미리 확인하고 이용하시는 것이 좋습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/220556748822" target="_self" class="transport-detail-link">👉 세부 마이버스 노선 및 시간표 보기</a>' },
-      { id: 6, icon: '🚕', name: '일반택시', desc: '💡 가장 흔하게 볼 수 있는 기본 화이트 택시!<br>- 특징: 세부 시내와 막탄 전역을 언제든 쉽게 잡아탈 수 있는 대중적인 수단입니다.<br>- 이용 팁: 탑승하자마자 "미터 플리즈"를 요구해 미터기가 켜졌는지 반드시 확인하시고, 기사가 잔돈이 없다고 하는 경우가 많으니 미리 소액권(20, 50, 100페소)을 준비해 탑승하세요.<br>- <a href="https://m.blog.naver.com/aalove0902/80210855292" target="_self" class="transport-detail-link">👉 세부 일반택시 바가지 예방 및 이용 팁 보기</a>' },
-      { id: 7, icon: '🟡', name: '공항택시', desc: '옐로우 택시. 기본요금 및 거리당 요금이 일반 택시보다 비싼 편.' },
-      { id: 8, icon: '✨', name: '프리미엄택시', desc: '💡 일반 택시보다 넓고 쾌적한 고급형 메인 택시!<br>- 특징: 주로 승용차형 일반 택시보다 차량 체급이 크거나(Innova 등 SUV 차종), 차량 상태가 훨씬 깨끗하게 관리되는 프리미엄급 로컬 택시 서비스입니다.<br>- 이용 팁: 짐이 많거나 가족 단위로 이동할 때 그랩카 대안으로 이용하기 좋으며, 일반 택시보다 기본요금이 조금 더 높게 책정되어 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223019374841" target="_self" class="transport-detail-link">👉 세부 프리미엄택시 종류 및 탑승 팁 보기</a>' },
-      { id: 9, icon: '🟢', name: '그린택시', desc: '친환경 또는 특정 브랜드의 깨끗한 로컬 메인 택시 종류 중 하나.' },
-      { id: 10, icon: '📱', name: '그랩', desc: '💡 세부 자유여행객(FIT)의 필수 교통 앱!<br>- 특징: 미터기 흥정이나 바가지 요금 시비가 없어 관광객이 가장 안전하게 이용할 수 있습니다.<br>- 이용 팁: 호출 시 정찰제인 "그랩카(GrabCar)"와 미터기 기준인 "그랩택시(GrabTaxi)"를 선택할 수 있습니다. 피크 시간대에는 배차가 지연되거나 요금이 오를 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222941029729" target="_self" class="transport-detail-link">👉 세부 그랩(Grab) 이용 방법 및 꿀팁 보기</a>' },
-      { id: 11, icon: '🚗', name: '렌트카', desc: '💡 가족여행 및 외곽 투어 시 가장 추천하는 수단!<br>- 특징: 세부는 도로 신호 체계가 복잡하고 현지 운전 문화가 독특해 직접 운전은 위험하므로, "기사가 포함된 단독 렌트카" 이용이 정석입니다.<br>- 이용 팁: 오슬롭 고래상어, 모알보알 거북이, 시내 쇼핑몰 투어 등 원하는 일정에 맞춰 가장 편안하고 안전하게 이동할 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222844608772" target="_self" class="transport-detail-link">👉 세부 기사포함 렌트카 예약 및 이용 팁 보기</a>' },
-      { id: 12, icon: '⛵', name: '배', desc: '막탄 앙실포트-올랑고 섬 방카 및 세부 피어 항구-각종 섬 이동 페리 정보.' }
+      { id: 1, icon: '🛵', iconBg: 'linear-gradient(135deg, #FF9500, #FFCC00)', name: '트라이시클', desc: '💡 골목길 및 단거리 이동용 필수 바이크!<br>- 특징: 세부나 막탄 내 리조트 인근 골목길이나 단거리를 이동할 때 가장 흔히 타는 수단입니다.<br>- 이용 팁: 탑승하기 전 기사와 목적지까지의 요금을 무조건 흥정하고 타는 것이 필수입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 트라이시클 이용 가이드 보기</a>' },
+      { id: 2, icon: '🚌', iconBg: 'linear-gradient(135deg, #00C7BE, #30D5C8)', name: '지프니(멀티캅)', desc: '💡 로컬인들의 가장 대중적인 메인 이동수단!<br>- 특징: 세부 시내와 막탄 전역을 촘촘하게 연결하는 필리핀 고유의 대중교통입니다.<br>- 이용 팁: 에어컨이 없어 매연과 더위에 노출되며, 탑승 시 소매치기 등 치안에 항상 주의해야 합니다. 기본요금은 15~20페소 내외입니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223542001744" target="_self" class="transport-detail-link">👉 세부 지프니 탑승 및 이용 가이드 보기</a>' },
+      { id: 3, icon: '⚡🔋🚌', iconBg: 'linear-gradient(135deg, #34C759, #30D158)', name: 'E-지프니', desc: '💡 세부·막탄의 신형 에어컨 프리미엄 지프니!<br>- 특징: 매연과 더위가 없는 100% 전기차량이며, 주요 로컬 거점을 쾌적하게 연결합니다.<br>- 대표 노선: 라푸라푸 퍼블릭 마켓 - 바박 - 코르도바 - 마리곤돈 크로싱 - 바삭 - 군옵을 순환하는 시계방향(Clockwise) 루프 서비스.<br>- 요금: 로컬 지프니와 비슷하게 거리 비례로 우려되며, 에어컨이 있어 아주 시원합니다. 잔돈(동전)을 미리 준비해 탑승하는 것이 매너입니다.' },
+      { id: 4, icon: '🚐', iconBg: 'linear-gradient(135deg, #007AFF, #5AC8FA)', name: '우돗코버스', desc: '💡 특정 로컬 노선을 순환하는 미니 에어컨 버스!<br>- 특징: 지프니보다 크고 일반 버스보다 컴팩트하여, 현지 정체 구간을 영리하게 통과하는 유용한 수단입니다.<br>- 이용 팁: 에어컨이 있어 쾌적하게 이동할 수 있으며, 현지인들의 출퇴근 메인 코스를 정찰제로 운행합니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222043003790" target="_self" class="transport-detail-link">👉 세부 우돗코버스 노선 및 이용 팁 보기</a>' },
+      { id: 5, icon: '🚍', iconBg: 'linear-gradient(135deg, #5856D6, #7B79F7)', name: '마이버스', desc: '💡 공항과 시내 주요 거점을 왕복하는 대형 에어컨 버스!<br>- 특징: 막탄 공항에서 세부 시내 SM 몰 등 주요 포인트를 안전하고 쾌적하게 연결합니다.<br>- 이용 팁: 캐리어를 실을 수 있는 넉넉한 공간이 있으며, 운행 시간표를 미리 확인하고 이용하시는 것이 좋습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/220556748822" target="_self" class="transport-detail-link">👉 세부 마이버스 노선 및 시간표 보기</a>' },
+      { id: 6, icon: '🚕', iconBg: 'linear-gradient(135deg, #FF9500, #FF6B00)', name: '일반택시', desc: '💡 가장 흔하게 볼 수 있는 기본 화이트 택시!<br>- 특징: 세부 시내와 막탄 전역을 언제든 쉽게 잡아탈 수 있는 대중적인 수단입니다.<br>- 이용 팁: 탑승하자마자 "미터 플리즈"를 요구해 미터기가 켜졌는지 반드시 확인하시고, 기사가 잔돈이 없다고 하는 경우가 많으니 미리 소액권(20, 50, 100페소)을 준비해 탑승하세요.<br>- <a href="https://m.blog.naver.com/aalove0902/80210855292" target="_self" class="transport-detail-link">👉 세부 일반택시 바가지 예방 및 이용 팁 보기</a>' },
+      { id: 7, icon: '🟡', iconBg: 'linear-gradient(135deg, #FFD60A, #FF9F0A)', name: '공항택시', desc: '옐로우 택시. 기본요금 및 거리당 요금이 일반 택시보다 비싼 편.' },
+      { id: 8, icon: '✨', iconBg: 'linear-gradient(135deg, #2C2C2E, #48484A)', name: '프리미엄택시', desc: '💡 일반 택시보다 넓고 쾌적한 고급형 메인 택시!<br>- 특징: 주로 승용차형 일반 택시보다 차량 체급이 크거나(Innova 등 SUV 차종), 차량 상태가 훨씬 깨끗하게 관리되는 프리미엄급 로컬 택시 서비스입니다.<br>- 이용 팁: 짐이 많거나 가족 단위로 이동할 때 그랩카 대안으로 이용하기 좋으며, 일반 택시보다 기본요금이 조금 더 높게 책정되어 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/223019374841" target="_self" class="transport-detail-link">👉 세부 프리미엄택시 종류 및 탑승 팁 보기</a>' },
+      { id: 9, icon: '🟢', iconBg: 'linear-gradient(135deg, #248A3D, #34C759)', name: '그린택시', desc: '친환경 또는 특정 브랜드의 깨끗한 로컬 메인 택시 종류 중 하나.' },
+      { id: 10, icon: '📱', iconBg: 'linear-gradient(135deg, #00B14F, #007A37)', name: '그랩', desc: '💡 세부 자유여행객(FIT)의 필수 교통 앱!<br>- 특징: 미터기 흥정이나 바가지 요금 시비가 없어 관광객이 가장 안전하게 이용할 수 있습니다.<br>- 이용 팁: 호출 시 정찰제인 "그랩카(GrabCar)"와 미터기 기준인 "그랩택시(GrabTaxi)"를 선택할 수 있습니다. 피크 시간대에는 배차가 지연되거나 요금이 오를 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222941029729" target="_self" class="transport-detail-link">👉 세부 그랩(Grab) 이용 방법 및 꿀팁 보기</a>' },
+      { id: 11, icon: '🚗', iconBg: 'linear-gradient(135deg, #FF2D55, #FF6B8A)', name: '렌트카', desc: '💡 가족여행 및 외곽 투어 시 가장 추천하는 수단!<br>- 특징: 세부는 도로 신호 체계가 복잡하고 현지 운전 문화가 독특해 직접 운전은 위험하므로, "기사가 포함된 단독 렌트카" 이용이 정석입니다.<br>- 이용 팁: 오슬롭 고래상어, 모알보알 거북이, 시내 쇼핑몰 투어 등 원하는 일정에 맞춰 가장 편안하고 안전하게 이동할 수 있습니다.<br>- <a href="https://m.blog.naver.com/aalove0902/222844608772" target="_self" class="transport-detail-link">👉 세부 기사포함 렌트카 예약 및 이용 팁 보기</a>' },
+      { id: 12, icon: '⛵', iconBg: 'linear-gradient(135deg, #007AFF, #0055B3)', name: '배', desc: '막탄 앙실포트-올랑고 섬 방카 및 세부 피어 항구-각종 섬 이동 페리 정보.' }
     ];
 
     let activeTransportId = null;
+
+    function getTransportBtnIconHtml(id) {
+      switch (id) {
+        case 3:
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36">
+  <rect x="4" y="20" width="56" height="28" rx="6" fill="#34C759" stroke="#248A3D" stroke-width="2"/>
+  <rect x="8" y="12" width="28" height="14" rx="4" fill="#4CD964" stroke="#248A3D" stroke-width="2"/>
+  <rect x="10" y="14" width="12" height="9" rx="2" fill="#aaddff"/>
+  <rect x="24" y="14" width="10" height="9" rx="2" fill="#aaddff"/>
+  <circle cx="16" cy="50" r="6" fill="#1C1C1E"/>
+  <circle cx="48" cy="50" r="6" fill="#1C1C1E"/>
+  <rect x="38" y="22" width="16" height="8" rx="2" fill="#FFD60A"/>
+  <text x="40" y="30" font-size="6" fill="#1C1C1E" font-weight="bold">E</text>
+</svg>`;
+        case 6:
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36">
+  <rect x="8" y="24" width="48" height="24" rx="6" fill="#ffffff" stroke="#cccccc" stroke-width="2"/>
+  <rect x="14" y="16" width="36" height="14" rx="4" fill="#eeeeee" stroke="#cccccc" stroke-width="2"/>
+  <circle cx="18" cy="50" r="6" fill="#444"/>
+  <circle cx="46" cy="50" r="6" fill="#444"/>
+  <rect x="24" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+  <rect x="36" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+</svg>`;
+        case 7:
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36">
+  <rect x="8" y="24" width="48" height="24" rx="6" fill="#FFD60A" stroke="#E6B800" stroke-width="2"/>
+  <rect x="14" y="16" width="36" height="14" rx="4" fill="#FFE566" stroke="#E6B800" stroke-width="2"/>
+  <circle cx="18" cy="50" r="6" fill="#444"/>
+  <circle cx="46" cy="50" r="6" fill="#444"/>
+  <rect x="24" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+  <rect x="36" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+</svg>`;
+        case 8:
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36">
+  <rect x="8" y="24" width="48" height="24" rx="6" fill="#1C1C1E" stroke="#444" stroke-width="2"/>
+  <rect x="14" y="16" width="36" height="14" rx="4" fill="#2C2C2E" stroke="#444" stroke-width="2"/>
+  <circle cx="18" cy="50" r="6" fill="#666"/>
+  <circle cx="46" cy="50" r="6" fill="#666"/>
+  <rect x="24" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+  <rect x="36" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+</svg>`;
+        case 9:
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36">
+  <rect x="8" y="24" width="48" height="24" rx="6" fill="#34C759" stroke="#248A3D" stroke-width="2"/>
+  <rect x="14" y="16" width="36" height="14" rx="4" fill="#4CD964" stroke="#248A3D" stroke-width="2"/>
+  <circle cx="18" cy="50" r="6" fill="#444"/>
+  <circle cx="46" cy="50" r="6" fill="#444"/>
+  <rect x="24" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+  <rect x="36" y="18" width="10" height="10" rx="2" fill="#aaddff"/>
+</svg>`;
+        default:
+          return null;
+      }
+    }
 
     function renderTransportGrid() {
       const grid = document.getElementById('transportGrid');
@@ -1104,8 +1317,9 @@
         btn.type = 'button';
         btn.className = 'transport-btn';
         btn.dataset.id = item.id;
+        const iconHtml = getTransportBtnIconHtml(item.id) ?? item.icon;
         btn.innerHTML = `
-          <span class="transport-btn-icon">${item.icon}</span>
+          <span class="transport-btn-icon" style="background:${item.iconBg}">${iconHtml}</span>
           <span class="transport-btn-label">${item.name}</span>`;
         grid.appendChild(btn);
       });
@@ -1140,13 +1354,13 @@
     const destinationModes = [
       {
         id: 1,
-        icon: '🦈🚗',
+        icon: '🚗🦈',
         name: '오슬롭 이동',
         desc: '💡 고래상어를 만나러 가는 남부 최고의 명소!<br>- 🚍 대중교통 이용 시: 세부 남부 버스 터미널(South Bus Terminal)에서 바토(Bato via Oslob)행 시외버스를 탑승합니다. 새벽 2~3시에는 출발해야 오전 피크 타임에 맞춰 도착할 수 있습니다.<br><a href="https://m.blog.naver.com/aalove0902/223721449587" target="_self" class="transport-detail-link">👉 버스로 이동방법 자세히보기</a><br><a href="https://m.blog.naver.com/aalove0902/223801858671" target="_self" class="transport-detail-link">👉 오슬롭에서 모알보알 이동방법 자세히보기</a><br>- 🚗 프라이빗 추천: 고래상어 투어 시작 시간과 체력 안배를 위해, 대부분의 자유여행객은 새벽 공항 픽업이나 리조트 픽업이 포함된 "기사 포함 단독 투어 차량"을 절대적으로 선호합니다. (편도 약 3~4시간 소요)'
       },
       {
         id: 2,
-        icon: '🐢🌊',
+        icon: '🚗🐢',
         name: '모알보알 이동',
         desc: '💡 정겨운 정취와 거북이, 정박형 정어리 떼의 천국!<br>- 🚍 대중교통 이용 시: 남부 버스 터미널에서 모알보알행 에어컨 버스를 타거나 터미널 인근의 V-hire(공동 배차 밴)를 이용해 모알보알 퍼블릭 마켓에 하차 후, 트라이시클을 타고 파낙사마 비치로 들어갑니다.<br><a href="https://m.blog.naver.com/aalove0902/223721449587" target="_self" class="transport-detail-link">👉 버스로 이동방법 자세히보기</a><br>- 🚗 프라이빗 추천: 무거운 캐리어나 스노클링 장비가 있다면 흥정 스트레스가 없고 원하는 시간에 출발할 수 있는 "단독 렌트카(기사 포함)"를 대절해 다이렉트로 이동하는 것이 가장 편리합니다. (편도 약 3시간~3시간 반 소요)'
       },
@@ -1164,7 +1378,7 @@
       },
       {
         id: 4,
-        icon: '🏖️⛵',
+        icon: '⛵🏖️',
         name: '카모테스 이동',
         desc: '💡 오염되지 않은 순수한 자연과 동굴 수영의 명소!<br>- ⛴️ 배편 이용 시: 세부 북부에 위치한 "다나오 포트(Danao Port)"까지 차량으로 이동한 후, 카모테스(콘수엘로 항구)행 페리를 타고 들어갑니다. (여객선으로 약 1시간 반~2시간 소요)<br>- 💡 이용 팁: 세부 피어 1 터미널에서도 제한적으로 직항 여객선이 운항하는 경우가 있으나, 시즌과 요일에 따라 운항 여부 변화가 심하므로 출발 전 최신 선박 스케줄을 반드시 확인해야 합니다.'
       }
@@ -1236,7 +1450,7 @@
         btn.className = 'transport-btn';
         btn.dataset.id = item.id;
         btn.innerHTML = `
-          <span class="transport-btn-icon">${item.icon}</span>
+          <span style="display:flex; flex-direction:row; align-items:center; justify-content:center; font-size:1.8rem; white-space:nowrap; line-height:1;">${item.icon}</span>
           <span class="transport-btn-label">${item.name}</span>`;
         grid.appendChild(btn);
       });
@@ -1267,13 +1481,169 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      initAlertBar();
       renderTransportGrid();
       renderDestinationGrid();
       renderFaq();
       initMapLocateButton();
-      initGoogleMap();
+      setTimeout(initGoogleMap, 500);
     });
   </script>
+
+<nav aria-label="세부 여행 앱 바로가기" style="display:grid; grid-template-columns:repeat(4,1fr); background:rgba(4,47,46,0.97); border-top:1px solid rgba(255,255,255,0.12); padding:12px 0 max(12px, env(safe-area-inset-bottom)); position:fixed; bottom:0; left:0; right:0; z-index:100; max-width:430px; margin:0 auto; width:100%;">
+  <a href="https://project-xj4hg-peach.vercel.app" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 4px; text-decoration:none; color:#fff; border-right:1px solid rgba(255,255,255,0.12);">
+    <span style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#FF9500,#FF6B00); display:flex; align-items:center; justify-content:center; font-size:24px;">🍽️</span>
+    <span style="font-size:12px; font-weight:700; color:#fff;">맛집</span>
+  </a>
+  <a href="https://cebu-places-guide.vercel.app" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 4px; text-decoration:none; color:#fff; border-right:1px solid rgba(255,255,255,0.12);">
+    <span style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#FF2D55,#FF6B8A); display:flex; align-items:center; justify-content:center; font-size:24px;">📍</span>
+    <span style="font-size:12px; font-weight:700; color:#fff;">가볼만한곳</span>
+  </a>
+  <a href="https://cebu-accommodation-guide.vercel.app/" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 4px; text-decoration:none; color:#fff; border-right:1px solid rgba(255,255,255,0.12);">
+    <span style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#007AFF,#5AC8FA); display:flex; align-items:center; justify-content:center; font-size:24px;">🏨</span>
+    <span style="font-size:12px; font-weight:700; color:#fff;">숙소</span>
+  </a>
+  <a href="https://cebu-travel-schedule.vercel.app/" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 4px; text-decoration:none; color:#fff;">
+    <span style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#5856D6,#7B79F7); display:flex; align-items:center; justify-content:center; font-size:24px;">🗓️</span>
+    <span style="font-size:12px; font-weight:700; color:#fff;">여행일정</span>
+  </a>
+</nav>
+
+<article id="seo-static-crawl" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;" lang="ko">
+
+  <section>
+    <h2>세부 교통 완전 가이드</h2>
+    <p>필리핀 세부 자유여행에서 가장 중요한 것 중 하나가 바로 교통입니다. 세부는 막탄 섬과 세부 본섬이 두 개의 다리로 연결되어 있으며, 출퇴근 시간대에는 극심한 교통체증이 발생합니다. 세부 여행 시 이용할 수 있는 주요 교통수단으로는 그랩(Grab), 일반택시, 공항택시, 프리미엄택시, 그린택시, 지프니, E-지프니, 우돗코버스, 마이버스, 트라이시클, 렌트카(기사 포함), 페리 등이 있습니다. 한국인 여행객에게는 그랩이 가장 안전하고 편리한 교통수단으로 추천됩니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 그랩(Grab) 이용 완전 가이드</h2>
+    <p>그랩은 동남아시아 최대의 차량 호출 앱으로, 세부에서 가장 안전하게 이동할 수 있는 수단입니다. 미터기 흥정이나 바가지 요금 걱정 없이 앱에 표시된 정찰제 금액만 결제하면 됩니다. 한국에서 출발 전에 미리 그랩 앱을 설치하고 카드 결제를 연동해 두는 것이 좋습니다.</p>
+    <p>그랩카(GrabCar)는 개인 승용차가 오는 사설 픽업 방식으로 정찰제 금액만 결제됩니다. 그랩택시(GrabTaxi)는 일반 미터기 택시가 매칭되는 방식으로 미터기 요금에 호출 수수료가 추가됩니다. 관광객에게는 차량 상태가 깨끗하고 바가지 걱정이 없는 그랩카가 훨씬 유리합니다. 피크 시간대(오전 7~9시, 오후 5~8시)에는 배차가 지연되거나 요금이 오를 수 있으므로 여유 있게 호출하는 것이 좋습니다.</p>
+    <h3>세부 그랩 결제 방법</h3>
+    <p>그랩 결제는 앱에 등록한 신용카드 또는 체크카드로 자동 결제됩니다. 현금 결제도 가능하지만 카드 결제가 더 편리합니다. 한국 카드도 대부분 등록 가능하며, 트립닷컴이나 카카오페이 연동도 지원합니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 공항 교통 완전 가이드</h2>
+    <p>막탄 세부 국제공항(Mactan-Cebu International Airport)에서 이동할 수 있는 방법은 여러 가지가 있습니다. 공항 정식 화이트 택시, 그랩, 마이버스, 여행사 픽업 차량 등을 이용할 수 있습니다.</p>
+    <h3>세부 공항에서 그랩 탑승 위치</h3>
+    <p>공항 터미널 2(국제선) 기준, 도착 로비를 나와 우측으로 쭉 걸어가시면 Grab Car Pick-up Zone 기둥과 부스가 마련되어 있습니다. 비행기가 몰리는 피크 시간대(오전 11시~오후 2시, 새벽 12시~2시)에는 배차가 지연되거나 요금이 2배 이상 폭등할 수 있습니다.</p>
+    <h3>세부 공항 택시 요금</h3>
+    <p>공항 정식 화이트 택시 기준 막탄 리조트까지 약 250~400페소, 세부 시티까지 약 400~600페소 내외입니다. 새벽 시간대나 정체 시 추가 요금이 발생할 수 있습니다. 반드시 탑승 전 미터기 사용을 요구하세요.</p>
+    <h3>세부 공항에서 마이버스 이용방법</h3>
+    <p>마이버스는 막탄 공항에서 세부 시내 SM몰, 아얄라몰 등 주요 거점을 연결하는 대형 에어컨 버스입니다. 요금이 저렴하고 캐리어를 실을 공간이 있어 배낭여행객에게 적합합니다. 운행 시간표를 미리 확인하고 이용하는 것이 좋습니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 공항에서 주요 리조트 이동방법</h2>
+    <h3>세부 공항에서 제이파크 가는 방법</h3>
+    <p>막탄 공항에서 제이파크 아일랜드 리조트까지는 차량으로 약 10~20분 거리입니다. 그랩 또는 공항 택시를 이용하면 되며 요금은 약 200~350페소 내외입니다. 막탄 섬 내에 위치해 있어 교통체증 영향이 적습니다.</p>
+    <h3>세부 공항에서 샹그릴라 가는 방법</h3>
+    <p>막탄 공항에서 샹그릴라 막탄 리조트까지는 차량으로 약 15~25분 거리입니다. 그랩 또는 공항 택시를 이용하면 되며 요금은 약 250~400페소 내외입니다. 리조트에서 픽업 서비스를 제공하는 경우도 있으니 사전에 확인하세요.</p>
+    <h3>세부 공항에서 플랜테이션베이 가는 방법</h3>
+    <p>막탄 공항에서 플랜테이션베이 리조트까지는 차량으로 약 20~30분 거리입니다. 그랩 또는 공항 택시를 이용하면 되며 요금은 약 300~450페소 내외입니다. 마리곤돈 지역에 위치해 있어 출퇴근 시간대는 피하는 것이 좋습니다.</p>
+    <h3>세부 공항에서 SM몰 가는 방법</h3>
+    <p>막탄 공항에서 SM시티 세부까지는 차량으로 약 30~60분 거리입니다. 그랩, 택시, 마이버스를 이용할 수 있습니다. 출퇴근 시간대에는 막탄-세부 연결 다리에서 극심한 정체가 발생하므로 1~2시간 여유를 두는 것이 좋습니다.</p>
+    <h3>세부 공항에서 아얄라몰 가는 방법</h3>
+    <p>막탄 공항에서 아얄라 센터 세부까지는 차량으로 약 40~70분 거리입니다. 그랩 또는 택시를 이용하면 됩니다. SM몰보다 더 안쪽에 위치해 있어 이동 시간이 조금 더 걸립니다.</p>
+    <h3>세부 공항에서 IT파크 가는 방법</h3>
+    <p>막탄 공항에서 IT파크(Cebu IT Park)까지는 차량으로 약 35~65분 거리입니다. 그랩 또는 택시를 이용하면 됩니다. IT파크 주변에는 한국 음식점과 카페가 많아 한국인 여행객이 자주 방문하는 지역입니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 주요 관광지 이동방법</h2>
+    <h3>세부에서 오슬롭 가는 방법</h3>
+    <p>세부 시내에서 오슬롭까지는 약 3~4시간이 소요됩니다. 남부 버스 터미널(South Bus Terminal)에서 바토(Bato via Oslob)행 시외버스를 탑승하는 방법과 기사 포함 렌트카를 이용하는 방법이 있습니다. 고래상어 투어는 오전 일찍 시작하므로 새벽 2~3시에 출발해야 합니다. 대부분의 자유여행객은 안전하고 편리한 단독 투어 차량을 선호합니다.</p>
+    <h3>세부에서 모알보알 가는 방법</h3>
+    <p>세부 시내에서 모알보알까지는 약 3시간~3시간 반이 소요됩니다. 남부 버스 터미널에서 모알보알행 에어컨 버스를 타거나 V-hire(공동 배차 밴)를 이용합니다. 모알보알 퍼블릭 마켓에서 하차 후 트라이시클을 타고 파낙사마 비치로 들어갑니다. 짐이 많거나 편하게 이동하고 싶다면 기사 포함 렌트카를 추천합니다.</p>
+    <h3>세부에서 보홀 가는 방법</h3>
+    <p>세부에서 보홀로 이동하려면 세부 피어 1(Pier 1) 여객터미널에서 오션젯(OceanJet) 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며 주말이나 성수기에는 매진이 잦으므로 사전 예약이 필수입니다. 기상 악화 시 결항될 수 있으므로 여유 일정을 두는 것이 좋습니다.</p>
+    <h3>세부에서 카모테스 가는 방법</h3>
+    <p>세부 북부에 위치한 다나오 포트(Danao Port)까지 차량으로 이동한 후 카모테스행 페리를 탑승합니다. 여객선으로 약 1시간 반~2시간이 소요됩니다. 세부 피어 1에서도 제한적으로 직항 여객선이 운항하므로 출발 전 최신 선박 스케줄을 확인하세요.</p>
+    <h3>세부에서 반타얀 가는 방법</h3>
+    <p>세부 북부 헤아(Hagnaya) 항구까지 차량으로 약 3~4시간 이동한 후 반타얀행 페리를 탑승합니다. 페리 소요 시간은 약 1시간입니다. 반타얀 섬은 아직 개발이 덜 되어 있어 세부에서 가장 아름다운 자연 해변을 즐길 수 있는 곳입니다.</p>
+    <h3>세부에서 시라오 가는 방법</h3>
+    <p>시라오 가든(Sirao Garden)은 세부 시내에서 차량으로 약 40~60분 거리에 위치합니다. 그랩 또는 기사 포함 렌트카를 이용하는 것이 가장 편리합니다. 산악 지형에 위치해 있어 대중교통 이용이 불편하므로 프라이빗 차량 이용을 추천합니다.</p>
+    <h3>막탄에서 IT파크 가는 방법</h3>
+    <p>막탄에서 IT파크까지는 그랩 또는 택시를 이용하면 됩니다. 출퇴근 시간대에는 막탄-세부 연결 다리에서 극심한 정체가 발생하므로 1~2시간 여유를 두는 것이 좋습니다. 그랩 기준 요금은 약 150~300페소 내외입니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 교통수단별 요금 및 특징</h2>
+    <h3>세부 택시 기본요금</h3>
+    <p>세부 일반 택시 기본요금은 약 40페소이며 이후 거리에 따라 미터기로 추가됩니다. 공항택시는 기본요금이 더 높습니다. 반드시 탑승 전 미터기 사용을 요구하고 잔돈(20, 50, 100페소)을 미리 준비하는 것이 좋습니다.</p>
+    <h3>세부 지프니 요금</h3>
+    <p>지프니 기본요금은 약 13~15페소이며 거리에 따라 추가됩니다. 에어컨이 없어 매연과 더위에 노출되며 소매치기 위험이 있습니다. 특별한 로컬 체험 목적이 아니라면 그랩이나 택시를 이용하는 것이 안전합니다.</p>
+    <h3>세부 버스 시간표</h3>
+    <p>세부 남부 버스 터미널에서는 오슬롭, 모알보알, 바디안 등 남부 방면 버스가 운행됩니다. 오슬롭행 버스는 새벽부터 운행하며 약 30분 간격으로 출발합니다. 에어컨 버스와 일반 버스가 있으며 에어컨 버스 요금이 조금 더 높습니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 교통체증 완전 가이드</h2>
+    <p>세부는 막탄 섬과 세부 본섬을 잇는 연결 다리가 두 개뿐이어서 출퇴근 시간대에 극심한 교통체증이 발생합니다. 평소 20분 거리가 1시간 이상 걸리는 경우가 흔합니다.</p>
+    <h3>세부 교통체증 심한 시간대</h3>
+    <p>오전 출근 시간(07:00~09:00)과 오후 퇴근 시간(17:00~20:00)이 가장 심합니다. 특히 금요일 오후와 토요일 저녁에는 쇼핑몰 방문 차량까지 더해져 최악의 정체가 발생합니다. 공항 이동이나 투어 미팅 시 반드시 1~2시간 여유를 두고 출발하세요.</p>
+    <h3>세부 교통체증 피하는 방법</h3>
+    <p>오전 6시 이전 또는 오전 10시 이후에 이동하면 교통체증을 피할 수 있습니다. 오슬롭 투어처럼 새벽 출발이 필요한 경우 새벽 2~3시에 출발하면 교통 없이 이동할 수 있습니다. 구글 지도의 실시간 교통 정보를 활용하면 현재 정체 상황을 확인할 수 있습니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 렌트카 완전 가이드</h2>
+    <p>세부에서 렌트카를 이용할 때는 반드시 기사가 포함된 차량을 이용하는 것을 강력히 권장합니다. 현지 운전 환경이 한국과 매우 달라 직접 운전은 위험합니다. 기사 포함 렌트카는 하루 종일 원하는 곳을 자유롭게 이동할 수 있어 가족여행이나 외곽 관광지 투어에 특히 유리합니다.</p>
+    <h3>세부 기사 포함 렌트카 요금</h3>
+    <p>세부 기사 포함 렌트카 요금은 차종과 이동 거리에 따라 다릅니다. 시내 반일 투어는 약 1,500~2,500페소, 오슬롭·모알보알 등 남부 투어는 약 3,000~5,000페소 내외입니다. 그랩보다 비용이 더 들지만 가족이나 그룹으로 이동 시 1인당 비용은 더 저렴할 수 있습니다.</p>
+  </section>
+
+  <section>
+    <h2>세부 교통 자주 묻는 질문</h2>
+    <dl>
+      <dt>공항에서 막탄 섬 리조트까지 이동 방법은요?</dt>
+      <dd>공항 정식 화이트 택시, 그랩(Grab) 카, 또는 여행사를 통한 사전 픽업 차량을 이용하는 것이 가장 안전하고 편리합니다. 일반 택시 기준 요금은 약 250~400페소 내외입니다.</dd>
+      <dt>세부 공항에서 그랩(Grab)은 어떻게 이용하나요?</dt>
+      <dd>한국에서 미리 그랩 앱을 설치하고 카드 결제를 연동해 오시는 것이 좋습니다. 공항 입국장을 나와 Grab Pick-up Zone 표지판이 있는 지정된 장소에서 호출하시면 됩니다.</dd>
+      <dt>세부에서 보홀로 이동하는 방법은?</dt>
+      <dd>세부 피어 1 여객터미널에서 오션젯 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며 사전 예약을 권장합니다.</dd>
+      <dt>세부에서 오슬롭 이동방법은?</dt>
+      <dd>남부 버스 터미널에서 오슬롭행 버스를 탑승하거나 기사 포함 단독 투어 차량을 이용합니다. 편도 약 3~4시간 소요됩니다.</dd>
+      <dt>세부에서 모알보알 이동방법은?</dt>
+      <dd>남부 버스 터미널에서 모알보알행 버스를 타거나 기사 포함 렌트카를 이용합니다. 편도 약 3시간~3시간 반 소요됩니다.</dd>
+      <dt>세부 교통체증은 얼마나 심한가요?</dt>
+      <dd>출퇴근 시간(오전 7~9시, 오후 5~8시)의 메인 도로는 매우 심합니다. 평소 20분 거리가 1시간 이상 소요될 수 있으므로 1~2시간 여유를 두고 움직이세요.</dd>
+      <dt>그랩카(GrabCar)와 그랩택시(GrabTaxi)의 차이점은?</dt>
+      <dd>그랩카는 정찰제 금액만 결제되고, 그랩택시는 미터기 요금에 수수료가 추가됩니다. 관광객에게는 그랩카가 더 유리합니다.</dd>
+      <dt>세부에서 렌터카 운전은 가능한가요?</dt>
+      <dd>국제운전면허증이 있으면 가능하지만 현지 운전 환경이 위험해 기사가 포함된 렌터카 이용을 강력히 권장합니다.</dd>
+      <dt>세부 그랩 결제 방법은?</dt>
+      <dd>앱에 등록한 신용카드 또는 체크카드로 자동 결제됩니다. 한국 카드도 대부분 등록 가능합니다. 현금 결제도 가능합니다.</dd>
+      <dt>세부 택시 기본요금은 얼마인가요?</dt>
+      <dd>일반 택시 기본요금은 약 40페소이며 이후 거리에 따라 미터기로 추가됩니다. 반드시 탑승 전 미터기 사용을 요구하세요.</dd>
+      <dt>막탄에서 IT파크 가는 방법은?</dt>
+      <dd>그랩 또는 택시를 이용하면 됩니다. 출퇴근 시간대에는 1~2시간 여유를 두는 것이 좋습니다. 그랩 기준 약 150~300페소 내외입니다.</dd>
+      <dt>세부 공항에서 SM몰 가는 방법은?</dt>
+      <dd>그랩, 택시, 마이버스를 이용할 수 있습니다. 출퇴근 시간대에는 다리에서 극심한 정체가 발생하므로 1~2시간 여유를 두세요.</dd>
+      <dt>세부 공항에서 아얄라몰 가는 방법은?</dt>
+      <dd>그랩 또는 택시를 이용하면 됩니다. SM몰보다 더 안쪽에 위치해 약 40~70분 소요됩니다.</dd>
+      <dt>세부에서 카모테스 가는 방법은?</dt>
+      <dd>다나오 포트까지 차량 이동 후 카모테스행 페리를 탑승합니다. 페리로 약 1시간 반~2시간 소요됩니다.</dd>
+      <dt>세부에서 반타얀 가는 방법은?</dt>
+      <dd>헤아 항구까지 차량으로 약 3~4시간 이동 후 반타얀행 페리를 탑승합니다. 페리로 약 1시간 소요됩니다.</dd>
+      <dt>세부에서 시라오 가는 방법은?</dt>
+      <dd>그랩 또는 기사 포함 렌트카를 이용합니다. 세부 시내에서 약 40~60분 소요됩니다.</dd>
+      <dt>세부 버스 시간표는 어떻게 되나요?</dt>
+      <dd>남부 버스 터미널에서 오슬롭행 버스는 새벽부터 약 30분 간격으로 출발합니다. 에어컨 버스와 일반 버스가 있습니다.</dd>
+      <dt>세부 교통체증이 가장 심한 시간은?</dt>
+      <dd>오전 7~9시, 오후 5~8시가 가장 심합니다. 특히 금요일 오후와 토요일 저녁이 최악입니다.</dd>
+      <dt>세부에서 기사 포함 렌트카 요금은?</dt>
+      <dd>시내 반일 투어는 약 1,500~2,500페소, 오슬롭·모알보알 등 남부 투어는 약 3,000~5,000페소 내외입니다.</dd>
+      <dt>세부 공항에서 제이파크 가는 방법은?</dt>
+      <dd>그랩 또는 공항 택시를 이용합니다. 약 10~20분 소요되며 요금은 약 200~350페소 내외입니다.</dd>
+      <dt>세부 공항에서 샹그릴라 가는 방법은?</dt>
+      <dd>그랩 또는 공항 택시를 이용합니다. 약 15~25분 소요되며 요금은 약 250~400페소 내외입니다.</dd>
+      <dt>세부 공항에서 플랜테이션베이 가는 방법은?</dt>
+      <dd>그랩 또는 공항 택시를 이용합니다. 약 20~30분 소요되며 요금은 약 300~450페소 내외입니다.</dd>
+    </dl>
+  </section>
+
+</article>
 </body>
 </html>
