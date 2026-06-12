@@ -880,6 +880,17 @@
         <p class="faq-intro">세부 여행자들이 가장 많이 묻는 교통·이동 관련 질문을 모았습니다.</p>
         <div class="faq-list" id="faqList"></div>
       </section>
+
+      <section style="padding: 20px 16px 100px;">
+        <h2 style="font-size:17px; font-weight:700; color:#ccfbf1; margin-bottom:16px; display:flex; align-items:center; gap:6px;">
+          📖 세부 교통 완전 가이드
+          <span style="flex:1; height:1px; background:linear-gradient(90deg, rgba(153,246,228,0.35), transparent);"></span>
+        </h2>
+        <div style="background:rgba(0,60,70,0.82); border:1px solid rgba(236,254,255,0.14); border-radius:16px; padding:14px 16px; margin-bottom:10px; font-size:12px; line-height:1.75; color:#99f6e4;">
+          <p>필리핀 세부 자유여행에서 가장 중요한 것 중 하나가 교통입니다. 세부는 막탄 섬과 세부 본섬이 두 개의 다리로 연결되어 있으며, 출퇴근 시간대에는 극심한 교통체증이 발생합니다. 한국인 여행객에게는 <strong style="color:#ccfbf1;">그랩(Grab)</strong>이 가장 안전하고 편리한 교통수단으로 추천됩니다.</p>
+        </div>
+        <div id="seoFaqList" style="display:flex; flex-direction:column; gap:10px;"></div>
+      </section>
     </main>
   </div>
 
@@ -1502,10 +1513,72 @@
       });
     }
 
+    const seoFaqItems = [
+      { q: "세부 공항에서 그랩 탑승 위치는 어디인가요?", a: "공항 터미널 2(국제선) 기준, 도착 로비를 나와 우측으로 쭉 걸어가시면 Grab Car Pick-up Zone 기둥과 부스가 마련되어 있습니다." },
+      { q: "세부 그랩 결제 방법은?", a: "앱에 등록한 신용카드 또는 체크카드로 자동 결제됩니다. 한국 카드도 대부분 등록 가능합니다." },
+      { q: "세부 택시 기본요금은 얼마인가요?", a: "일반 택시 기본요금은 약 40페소이며 이후 거리에 따라 미터기로 추가됩니다." },
+      { q: "세부 공항에서 제이파크 가는 방법은?", a: "그랩 또는 공항 택시를 이용합니다. 약 10~20분 소요되며 요금은 약 200~350페소 내외입니다." },
+      { q: "세부 공항에서 샹그릴라 가는 방법은?", a: "그랩 또는 공항 택시를 이용합니다. 약 15~25분 소요되며 요금은 약 250~400페소 내외입니다." },
+      { q: "세부 공항에서 SM몰 가는 방법은?", a: "그랩, 택시, 마이버스를 이용할 수 있습니다. 출퇴근 시간대에는 1~2시간 여유를 두세요." },
+      { q: "세부 공항에서 아얄라몰 가는 방법은?", a: "그랩 또는 택시를 이용하면 됩니다. SM몰보다 더 안쪽에 위치해 약 40~70분 소요됩니다." },
+      { q: "세부에서 오슬롭 가는 방법은?", a: "남부 버스 터미널에서 오슬롭행 버스를 탑승하거나 기사 포함 단독 투어 차량을 이용합니다. 편도 약 3~4시간 소요됩니다." },
+      { q: "세부에서 모알보알 가는 방법은?", a: "남부 버스 터미널에서 모알보알행 버스를 타거나 기사 포함 렌트카를 이용합니다. 편도 약 3시간~3시간 반 소요됩니다." },
+      { q: "세부에서 보홀 가는 방법은?", a: "세부 피어 1 여객터미널에서 오션젯 고속 페리를 타고 보홀 탁빌라란 항구로 이동합니다. 소요 시간은 약 2시간이며 사전 예약을 권장합니다." },
+      { q: "세부 교통체증이 가장 심한 시간은?", a: "오전 7~9시, 오후 5~8시가 가장 심합니다. 특히 금요일 오후와 토요일 저녁이 최악입니다." },
+      { q: "세부에서 기사 포함 렌트카 요금은?", a: "시내 반일 투어는 약 1,500~2,500페소, 오슬롭·모알보알 등 남부 투어는 약 3,000~5,000페소 내외입니다." },
+      { q: "세부에서 반타얀 가는 방법은?", a: "헤아 항구까지 차량으로 약 3~4시간 이동 후 반타얀행 페리를 탑승합니다. 페리로 약 1시간 소요됩니다." },
+      { q: "세부에서 시라오 가는 방법은?", a: "그랩 또는 기사 포함 렌트카를 이용합니다. 세부 시내에서 약 40~60분 소요됩니다." },
+      { q: "막탄에서 IT파크 가는 방법은?", a: "그랩 또는 택시를 이용하면 됩니다. 출퇴근 시간대에는 1~2시간 여유를 두는 것이 좋습니다." }
+    ];
+
+    function renderSeoFaq() {
+      const container = document.getElementById('seoFaqList');
+      if (!container) return;
+      seoFaqItems.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.style.cssText = 'background:rgba(0,60,70,0.82); border:1px solid rgba(236,254,255,0.14); border-radius:16px; overflow:hidden;';
+        el.innerHTML = `
+          <button type="button" aria-expanded="false" style="width:100%; display:flex; align-items:flex-start; gap:10px; padding:14px 16px; border:none; background:transparent; cursor:pointer; text-align:left; font-family:inherit; color:#ccfbf1;">
+            <span style="flex-shrink:0; font-size:10px; font-weight:700; color:#fef9c3; background:rgba(0,0,0,0.28); padding:3px 7px; border-radius:6px; margin-top:2px;">Q${i + 1}</span>
+            <span style="flex:1; font-size:13px; font-weight:600; line-height:1.5; color:#ccfbf1;">${item.q}</span>
+            <span class="seo-faq-arrow" style="flex-shrink:0; font-size:11px; color:#5eead4; transition:transform 0.3s ease; margin-top:4px;">▼</span>
+          </button>
+          <div class="seo-faq-answer-wrap" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p style="padding:12px 16px 16px; margin:0 16px 16px; font-size:12px; line-height:1.75; color:#99f6e4; border-top:1px solid rgba(153,246,228,0.15);">${item.a}</p>
+          </div>`;
+        container.appendChild(el);
+      });
+
+      container.addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const wrap = btn.nextElementSibling;
+        const arrow = btn.querySelector('.seo-faq-arrow');
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        container.querySelectorAll('button[aria-expanded="true"]').forEach(b => {
+          if (b !== btn) {
+            b.setAttribute('aria-expanded', 'false');
+            b.nextElementSibling.style.maxHeight = '0';
+            b.querySelector('.seo-faq-arrow').style.transform = 'rotate(0deg)';
+          }
+        });
+        if (isOpen) {
+          btn.setAttribute('aria-expanded', 'false');
+          wrap.style.maxHeight = '0';
+          arrow.style.transform = 'rotate(0deg)';
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          wrap.style.maxHeight = '9999px';
+          arrow.style.transform = 'rotate(180deg)';
+        }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       renderTransportGrid();
       renderDestinationGrid();
       renderFaq();
+      renderSeoFaq();
       initMapLocateButton();
       setTimeout(initGoogleMap, 500);
     });
@@ -1530,7 +1603,7 @@
   </a>
 </nav>
 
-<article id="seo-static-crawl" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;" lang="ko">
+<article id="seo-static-crawl" lang="ko">
 
   <section>
     <h2>세부 교통 완전 가이드</h2>
